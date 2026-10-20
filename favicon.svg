@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>.o{stroke:#16181d}@media (prefers-color-scheme:dark){.o{stroke:#e8edf3}}</style>
+  <g fill="none" stroke-width="3" class="o">
+    <path d="M6 7v18c0 2.2 4.5 4 10 4s10-1.8 10-4V7"/>
+    <path d="M6 13c0 2.2 4.5 4 10 4s10-1.8 10-4M6 19c0 2.2 4.5 4 10 4s10-1.8 10-4"/>
+  </g>
+  <ellipse cx="16" cy="7" rx="10" ry="4" fill="#F5A742" stroke="#16181d" stroke-width="3" class="o"/>
+</svg>

@@ -1,0 +1,1670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Learning Platform · Dawit Demissie</title>
+<meta name="description" content="Course materials, announcements, assignments, exams and messages in one place.">
+<meta name="theme-color" content="#0f7b6c">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem("dd-lms-theme");if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.setAttribute("data-theme",t)}catch(e){document.documentElement.setAttribute("data-theme","light")}</script>
+<script src="config.js"></script>
+<style>
+:root,:root[data-theme=light]{
+  --bg:#f4f6f8;--panel:#fff;--raise:#fff;--soft:#f8fafb;--border:#e1e5ea;--border-strong:#cbd2da;--hover:#eef1f4;
+  --text:#16181d;--muted:#5f6b78;--faint:#8a95a1;
+  --accent:#0f7b6c;--accent-ink:#fff;--accent-soft:#e2f3f0;
+  --amber:#b86e00;--amber-soft:#fff1d9;--cyl:#f5a742;
+  --err:#c2362b;--err-soft:#fdecea;--ok:#1a7f37;--ok-soft:#e5f5ea;--info:#2f6feb;--info-soft:#e8effd;
+  --shadow:0 1px 2px rgb(16 24 40/.06),0 1px 3px rgb(16 24 40/.06);
+  --pop:0 16px 40px rgb(16 24 40/.18),0 2px 6px rgb(16 24 40/.08);
+  color-scheme:light;
+}
+:root[data-theme=dark]{
+  --bg:#0c0f13;--panel:#12161c;--raise:#181d25;--soft:#151a21;--border:#262e39;--border-strong:#354050;--hover:#1e2530;
+  --text:#e8edf3;--muted:#98a5b3;--faint:#6f7c8a;
+  --accent:#3cc2a9;--accent-ink:#062520;--accent-soft:#12302b;
+  --amber:#f0b45c;--amber-soft:#33270f;
+  --err:#ff8a80;--err-soft:#3a1b1a;--ok:#4cc370;--ok-soft:#14301d;--info:#7aa7ff;--info-soft:#16233d;
+  --shadow:0 1px 2px rgb(0 0 0/.4);--pop:0 16px 40px rgb(0 0 0/.6);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+svg:not([width]){width:1.15em;height:1.15em;flex:none}
+html,body{height:100%;margin:0}
+html{scroll-padding-top:76px}
+html:has(.timer){scroll-padding-top:140px}
+body{background:var(--bg);color:var(--text);font:15px/1.55 "Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+code,pre,kbd,.mono{font-family:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,monospace}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3{line-height:1.25;letter-spacing:-.01em;margin:0}
+h1{font-size:26px} h2{font-size:19px} h3{font-size:16px}
+p{margin:0 0 10px}
+.muted{color:var(--muted)} .small{font-size:13px} .tiny{font-size:12px} .spacer{flex:1}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.stack{display:flex;flex-direction:column;gap:12px}
+.hidden{display:none!important}
+
+/* buttons & inputs */
+.btn{font:inherit;font-size:14px;font-weight:500;color:var(--text);background:var(--raise);border:1px solid var(--border);border-radius:9px;min-height:36px;padding:0 14px;display:inline-flex;align-items:center;justify-content:center;gap:7px;cursor:pointer;white-space:nowrap;text-decoration:none;transition:background-color .12s,border-color .12s}
+.btn:hover:not(:disabled){background:var(--hover);border-color:var(--border-strong)}
+.btn:disabled{opacity:.5;cursor:default}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.btn.primary:hover:not(:disabled){background:var(--accent);filter:brightness(1.07)}
+.btn.danger{color:var(--err)} .btn.danger:hover:not(:disabled){background:var(--err-soft);border-color:var(--err)}
+.btn.ghost{background:transparent;border-color:transparent}
+.btn.ghost:hover:not(:disabled){background:var(--hover)}
+.btn.sm{min-height:30px;padding:0 10px;font-size:13px;border-radius:8px}
+.btn.icon{width:36px;padding:0} .btn.sm.icon{width:30px}
+.btn svg{width:16px;height:16px;flex:none}
+label.field{display:flex;flex-direction:column;gap:5px;font-size:13.5px;font-weight:600}
+label.field>span.hint{font-weight:400;color:var(--muted);font-size:12.5px}
+input[type=text],input[type=email],input[type=password],input[type=number],input[type=datetime-local],input[type=search],select,textarea{font:inherit;font-size:14.5px;font-weight:400;color:var(--text);background:var(--panel);border:1px solid var(--border-strong);border-radius:9px;padding:8px 11px;width:100%}
+textarea{min-height:110px;resize:vertical;line-height:1.5}
+input[type=checkbox],input[type=radio]{accent-color:var(--accent);width:16px;height:16px}
+label.check{display:flex;gap:8px;align-items:center;font-size:14px;cursor:pointer}
+input[type=file]{font:inherit;font-size:13.5px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+
+/* chips */
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--hover);color:var(--muted);white-space:nowrap}
+.chip.ok{background:var(--ok-soft);color:var(--ok)} .chip.warn{background:var(--amber-soft);color:var(--amber)}
+.chip.err{background:var(--err-soft);color:var(--err)} .chip.info{background:var(--info-soft);color:var(--info)}
+.chip.accent{background:var(--accent-soft);color:var(--accent)}
+
+/* app shell */
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:14px;padding:8px 18px;background:var(--panel);border-bottom:1px solid var(--border)}
+.top .logo img{display:block;height:42px;width:auto}
+.course-id{display:flex;flex-direction:column;line-height:1.2;padding-left:14px;border-left:1px solid var(--border);min-width:0}
+.course-id b{font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.course-id span{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.who{display:flex;align-items:center;gap:9px;border:1px solid var(--border);border-radius:999px;padding:3px 12px 3px 3px;background:var(--raise);cursor:pointer;font:inherit;color:var(--text)}
+.who:hover{background:var(--hover)}
+.avatar{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;color:#fff;flex:none}
+.who .nm{font-size:13.5px;font-weight:600;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.who .rl{font-size:11.5px;color:var(--muted)}
+.demo-pick{display:flex;align-items:center;gap:8px;background:var(--amber-soft);color:var(--amber);border-radius:10px;padding:4px 6px 4px 12px;font-size:12.5px;font-weight:600}
+.demo-pick select{width:auto;padding:4px 8px;font-size:13px;border-radius:7px}
+.banner{display:flex;gap:10px;align-items:center;padding:8px 18px;background:var(--amber-soft);color:var(--text);font-size:13.5px;border-bottom:1px solid var(--border)}
+.banner svg{color:var(--amber);flex:none}
+.layout{display:grid;grid-template-columns:240px minmax(0,1fr);min-height:calc(100% - 59px)}
+nav.side{border-right:1px solid var(--border);background:var(--panel);padding:14px 10px;position:sticky;top:59px;align-self:start;height:calc(100vh - 59px);overflow:auto}
+nav.side a{display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:9px;color:var(--muted);text-decoration:none;font-weight:500;font-size:14.5px}
+nav.side a:hover{background:var(--hover);color:var(--text)}
+nav.side a.on{background:var(--accent-soft);color:var(--text);font-weight:600}
+nav.side a.on svg{color:var(--accent)}
+nav.side a svg{width:18px;height:18px;flex:none}
+nav.side .badge{margin-left:auto;background:var(--accent);color:var(--accent-ink);font-size:11.5px;font-weight:700;border-radius:999px;padding:0 7px;min-width:20px;text-align:center}
+nav.side .badge.amber{background:var(--cyl);color:#1b1206}
+nav.side .sep{height:1px;background:var(--border);margin:10px 8px}
+nav.side .label{font-size:11.5px;font-weight:700;color:var(--faint);text-transform:uppercase;letter-spacing:.06em;padding:4px 12px}
+main{padding:26px 30px 60px;min-width:0}
+.page{max-width:1080px;margin:0 auto}
+.page-head{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:20px}
+.page-head .sub{color:var(--muted);margin-top:4px}
+.crumb{font-size:13px;color:var(--muted);margin-bottom:6px}
+.crumb a{color:var(--muted);text-decoration:none} .crumb a:hover{color:var(--accent)}
+
+/* cards */
+.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow)}
+.card.pad{padding:18px 20px}
+.card-head{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.card-body{padding:16px 18px}
+.list>.item{display:flex;gap:14px;align-items:center;padding:14px 18px;border-top:1px solid var(--border);text-decoration:none;color:inherit}
+.list>.item:first-child{border-top:0}
+a.item:hover,button.item:hover{background:var(--soft)}
+button.item{width:100%;text-align:left;font:inherit;background:none;border:0;border-top:1px solid var(--border);cursor:pointer}
+.item .ttl{font-weight:600}
+.item .meta{font-size:13px;color:var(--muted)}
+.tile{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;flex:none;color:#fff}
+.tile svg{width:19px;height:19px}
+.t-teal{background:#0f7b6c} .t-amber{background:#e0951f} .t-blue{background:#2f6feb} .t-purple{background:#8b4fd6} .t-ink{background:#2d3440} .t-red{background:#c2362b}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:18px}
+.stat{padding:16px 18px;display:flex;gap:14px;align-items:center}
+.stat b{font-size:24px;line-height:1;display:block}
+.stat div>span{font-size:13px;color:var(--muted)}
+.hero{padding:26px 28px;background:linear-gradient(135deg,var(--panel) 55%,var(--accent-soft));position:relative;overflow:hidden;margin-bottom:18px}
+.hero .code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;color:var(--amber);font-weight:600}
+.hero h1{margin:6px 0 8px;font-size:28px}
+.empty{padding:34px 20px;text-align:center;color:var(--muted)}
+.empty svg{width:34px;height:34px;color:var(--faint);margin-bottom:8px}
+
+/* rich text */
+.md{line-height:1.65;overflow-wrap:anywhere}
+.md>*:last-child{margin-bottom:0}
+.md h1,.md h2,.md h3{margin:14px 0 8px}
+.md ul,.md ol{margin:0 0 10px;padding-left:22px}
+.md code{background:var(--hover);padding:1px 5px;border-radius:5px;font-size:.9em}
+.md pre{background:var(--soft);border:1px solid var(--border);padding:12px 14px;border-radius:10px;overflow:auto;font-size:13.5px}
+.md pre code{background:none;padding:0}
+.md blockquote{margin:0 0 10px;padding:4px 14px;border-left:3px solid var(--cyl);color:var(--muted)}
+
+/* tables */
+.table-wrap{overflow:auto}
+table.t{width:100%;border-collapse:collapse;font-size:14px}
+table.t th{text-align:left;font-size:12.5px;font-weight:600;color:var(--muted);padding:10px 14px;border-bottom:1px solid var(--border);white-space:nowrap;background:var(--soft)}
+table.t td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+table.t tr:last-child td{border-bottom:0}
+table.t td.num,table.t th.num{text-align:right;font-variant-numeric:tabular-nums}
+table.t input[type=number]{width:84px;padding:5px 8px}
+table.t input[type=text]{padding:5px 8px;min-width:160px}
+
+/* materials */
+.module{margin-bottom:14px}
+.module .card-head h3{flex:1}
+.mat{display:flex;gap:12px;align-items:flex-start;padding:12px 18px;border-top:1px solid var(--border)}
+.mat:first-child{border-top:0}
+.mat .tile{width:32px;height:32px;border-radius:8px}
+.mat .tile svg{width:16px;height:16px}
+.mat details summary{cursor:pointer;font-weight:600;list-style:none}
+.mat details summary::-webkit-details-marker{display:none}
+.mat details[open] summary{margin-bottom:8px}
+.mat .tools{margin-left:auto;display:flex;gap:2px;opacity:.0;transition:opacity .12s}
+.mat:hover .tools,.module .card-head:hover .tools,.mat .tools:focus-within,.module .card-head .tools:focus-within{opacity:1}
+.module .card-head .tools{display:flex;gap:2px;opacity:0;transition:opacity .12s}
+@media (hover:none){.mat .tools,.module .card-head .tools{opacity:1}}
+
+/* exams */
+.q{padding:18px 20px;border-top:1px solid var(--border)}
+.q:first-child{border-top:0}
+.q .qn{font-size:12.5px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.05em}
+.q .prompt{margin:4px 0 12px;font-weight:500}
+.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--border);border-radius:10px;margin-bottom:7px;cursor:pointer}
+.opt:hover{background:var(--soft)}
+.opt:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+.timer{position:sticky;top:59px;z-index:5;display:flex;align-items:center;gap:12px;padding:10px 16px;margin-bottom:14px;border-radius:12px;background:var(--panel);border:1px solid var(--border);box-shadow:var(--shadow)}
+.timer .clock{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:18px;font-weight:700}
+.timer.low{border-color:var(--err);background:var(--err-soft)} .timer.low .clock{color:var(--err)}
+.timer .bar{flex:1;height:6px;border-radius:999px;background:var(--hover);overflow:hidden}
+.timer .bar span{display:block;height:100%;background:var(--accent);transition:width 1s linear}
+.timer.low .bar span{background:var(--err)}
+.qedit{border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:12px;background:var(--soft)}
+.qedit .opts .row{margin-bottom:6px;flex-wrap:nowrap}
+.mark{font-size:13px;font-weight:700} .mark.ok{color:var(--ok)} .mark.bad{color:var(--err)} .mark.pend{color:var(--amber)}
+.answer-box{background:var(--soft);border:1px solid var(--border);border-radius:9px;padding:9px 12px;white-space:pre-wrap;font-size:14px}
+
+/* messages */
+.inbox{display:grid;grid-template-columns:280px minmax(0,1fr);min-height:520px}
+.inbox .threads{border-right:1px solid var(--border);overflow:auto;max-height:70vh}
+.thread{display:flex;flex-direction:column;min-height:520px;max-height:72vh}
+.msgs{flex:1;overflow:auto;padding:18px;display:flex;flex-direction:column;gap:10px}
+.bubble{max-width:72%;padding:9px 13px;border-radius:14px;background:var(--hover);white-space:pre-wrap;overflow-wrap:anywhere}
+.bubble.me{align-self:flex-end;background:var(--accent);color:var(--accent-ink);border-bottom-right-radius:4px}
+.bubble.them{align-self:flex-start;border-bottom-left-radius:4px}
+.bubble .when{display:block;font-size:11px;opacity:.75;margin-top:3px}
+.composer{display:flex;gap:10px;padding:12px;border-top:1px solid var(--border)}
+.composer textarea{min-height:44px;height:44px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex:none}
+
+/* overlays */
+.modal-back{position:fixed;inset:0;background:rgb(8 12 18/.5);backdrop-filter:blur(2px);z-index:60;display:grid;place-items:center;padding:16px}
+.modal{background:var(--panel);border:1px solid var(--border);border-radius:16px;box-shadow:var(--pop);width:min(640px,100%);max-height:calc(100vh - 32px);display:flex;flex-direction:column}
+.modal.wide{width:min(860px,100%)}
+.modal header{padding:18px 22px 6px;display:flex;align-items:center;gap:10px}
+.modal header h2{flex:1}
+.modal .mbody{padding:10px 22px 16px;overflow:auto}
+.modal footer{display:flex;gap:10px;justify-content:flex-end;padding:14px 22px;border-top:1px solid var(--border);background:var(--soft);border-radius:0 0 16px 16px}
+.menu{position:absolute;right:0;top:calc(100% + 6px);background:var(--raise);border:1px solid var(--border);border-radius:12px;box-shadow:var(--pop);padding:6px;min-width:220px;z-index:40}
+.menu button{display:flex;gap:10px;align-items:center;width:100%;font:inherit;font-size:14px;background:none;border:0;color:var(--text);padding:9px 12px;border-radius:8px;cursor:pointer;text-align:left}
+.menu button:hover{background:var(--hover)}
+.menu .mh{padding:8px 12px 10px;border-bottom:1px solid var(--border);margin-bottom:4px;font-size:13px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,12px);opacity:0;background:var(--text);color:var(--panel);padding:10px 18px;border-radius:11px;font-size:14px;font-weight:500;box-shadow:var(--pop);z-index:90;transition:opacity .2s,transform .2s;pointer-events:none;max-width:min(560px,92vw)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.toast.err{background:var(--err);color:#fff}
+
+/* sign-in */
+.auth{min-height:100vh;min-height:100dvh;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 20% 10%,var(--accent-soft),transparent 45%),radial-gradient(circle at 85% 90%,var(--amber-soft),transparent 40%),var(--bg)}
+.auth .card{width:min(440px,100%);padding:30px 30px 26px}
+.auth img{height:54px;display:block;margin:0 auto 22px}
+.loading{min-height:100vh;display:grid;place-items:center;color:var(--muted)}
+.spin{width:22px;height:22px;border:3px solid var(--border-strong);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;display:inline-block;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.menu-btn{display:none}
+@media (max-width:1000px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))} .course-id{display:none}}
+@media (max-width:820px){
+  .layout{grid-template-columns:1fr}
+  nav.side{position:fixed;left:0;top:59px;bottom:0;width:260px;height:auto;z-index:30;transform:translateX(-102%);transition:transform .2s;box-shadow:var(--pop)}
+  body.nav-open nav.side{transform:none}
+  body.nav-open::after{content:"";position:fixed;inset:59px 0 0;background:rgb(8 12 18/.4);z-index:25}
+  .menu-btn{display:inline-flex}
+  main{padding:18px 14px 50px}
+  .top{padding:8px 10px;gap:8px}
+  .top .logo img{height:32px}
+  .who .nm,.who .rl,.demo-pick .lbl{display:none}
+  .top .logo{min-width:0;flex-shrink:1} .top .logo img{max-width:100%;object-fit:contain;object-position:left}
+  .demo-pick{padding:3px;min-width:0;flex-shrink:1} .demo-pick select{max-width:118px}
+  .top .spacer{display:none} .demo-pick{margin-left:auto}
+  .page-head>.row{width:100%}
+  .who{padding:3px}
+  .grid2,.grid3{grid-template-columns:1fr}
+  .inbox{grid-template-columns:1fr}
+  .inbox .threads{border-right:0;border-bottom:1px solid var(--border);max-height:220px}
+  h1{font-size:22px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation-duration:2s!important}}
+</style>
+</head>
+<body>
+<div id="app"><div class="loading"><span><span class="spin"></span>&nbsp; Loading…</span></div></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+"use strict";
+/* ============================== basics ============================== */
+const CFG = window.LMS_CONFIG || {};
+const DEMO = !(CFG.supabaseUrl && CFG.supabaseAnonKey);
+const SUPABASE_JS = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js";
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const uid = () => (crypto.randomUUID ? crypto.randomUUID() : "id-" + Date.now().toString(36) + Math.random().toString(36).slice(2));
+const nowIso = () => new Date().toISOString();
+const byPos = (a, b) => (a.position ?? 0) - (b.position ?? 0) || String(a.created_at).localeCompare(String(b.created_at));
+const num = v => (v === null || v === undefined || v === "" ? null : Number(v));
+const fmtNum = v => (v === null || v === undefined ? "–" : (Math.round(Number(v) * 100) / 100).toLocaleString());
+const safeFile = n => String(n).replace(/[^\w.\-]+/g, "_").slice(-80) || "file";
+
+function fmtDate(iso, opts) {
+  if (!iso) return "";
+  const d = new Date(iso);
+  return d.toLocaleString(undefined, opts || { weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+}
+function fmtDay(iso) { return iso ? new Date(iso).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }) : ""; }
+function relTime(iso) {
+  if (!iso) return "";
+  const s = (new Date(iso) - Date.now()) / 1000, a = Math.abs(s);
+  const r = new Intl.RelativeTimeFormat(undefined, { numeric: "auto" });
+  if (a < 60) return s < 0 ? "just now" : "in a moment";
+  if (a < 3600) return r.format(Math.round(s / 60), "minute");
+  if (a < 86400) return r.format(Math.round(s / 3600), "hour");
+  if (a < 86400 * 30) return r.format(Math.round(s / 86400), "day");
+  return fmtDay(iso);
+}
+/* <input type=datetime-local> uses local time without a zone */
+function toLocalInput(iso) {
+  if (!iso) return "";
+  const d = new Date(iso), p = n => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`;
+}
+const fromLocalInput = v => (v ? new Date(v).toISOString() : null);
+function initials(name, email) {
+  const s = (name || email || "?").trim();
+  const p = s.split(/\s+/).filter(Boolean);
+  return ((p[0]?.[0] || "?") + (p.length > 1 ? p[p.length - 1][0] : "")).toUpperCase();
+}
+const AV_COLORS = ["#0f7b6c", "#e0951f", "#2f6feb", "#8b4fd6", "#c2362b", "#1a7f37", "#d0487a", "#3d5a80"];
+function avatar(p) {
+  const k = [...String(p?.id || p?.email || "")].reduce((a, c) => a + c.charCodeAt(0), 0);
+  return `<span class="avatar" style="background:${AV_COLORS[k % AV_COLORS.length]}">${esc(initials(p?.full_name, p?.email))}</span>`;
+}
+const displayName = p => (p ? p.full_name || p.email || "Someone" : "Someone");
+
+let toastT;
+function toast(msg, isErr) {
+  const t = $("#toast");
+  t.textContent = msg; t.className = "toast on" + (isErr ? " err" : "");
+  clearTimeout(toastT); toastT = setTimeout(() => (t.className = "toast"), isErr ? 5000 : 2600);
+}
+function errMsg(e) {
+  const m = (e && (e.message || e.error_description || e.msg)) || String(e);
+  if (/row-level security|permission denied/i.test(m)) return "You don't have permission to do that.";
+  if (/Failed to fetch|NetworkError/i.test(m)) return "Couldn't reach the server. Check your internet connection and try again.";
+  return m;
+}
+function saveBlob(blob, name) {
+  const url = URL.createObjectURL(blob), a = document.createElement("a");
+  a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 3000);
+}
+function csv(rows) {
+  const e = v => { const s = v === null || v === undefined ? "" : String(v); return /[",\r\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+  return "\ufeff" + rows.map(r => r.map(e).join(",")).join("\r\n");
+}
+
+/* ============================== icons ============================== */
+const ICONS = {
+  home: "M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z",
+  megaphone: "M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1zM15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13",
+  book: "M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5zM4 21.5A2.5 2.5 0 0 1 6.5 19H20v3H6.5",
+  clipboard: "M9 3h6a1 1 0 0 1 1 1v2H8V4a1 1 0 0 1 1-1zM8 5H6a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 13l2 2 4-4",
+  exam: "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7v5l3 2",
+  chat: "M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z",
+  chart: "M4 20V10M10 20V4M16 20v-7M22 20H2",
+  people: "M16 20v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 4 18.5V20M10 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM20 20v-1.5a3.5 3.5 0 0 0-2.5-3.35M15.5 4.2a3.5 3.5 0 0 1 0 6.6",
+  gear: "M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 0 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 0 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 0 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 0 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z",
+  plus: "M12 5v14M5 12h14",
+  edit: "M4 20h4L19 9l-4-4L4 16zM14 6l4 4",
+  trash: "M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3",
+  up: "m6 15 6-6 6 6", down: "m6 9 6 6 6-6",
+  note: "M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8zM14 3v5h5M9 13h6M9 17h4",
+  link: "M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1",
+  file: "M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8zM14 3v5h5",
+  upload: "M4 15v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4M12 4v11M7 9l5-5 5 5",
+  download: "M12 3v12M7 10l5 5 5-5M5 21h14",
+  send: "M22 2 11 13M22 2l-7 20-4-9-9-4z",
+  pin: "M12 17v5M9 3h6l-1 6 3 3H7l3-3z",
+  check: "M5 12.5 10 17 19 7", x: "M6 6l12 12M18 6 6 18",
+  clock: "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7v5l3 2",
+  sun: "M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4",
+  moon: "M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z",
+  menu: "M4 6h16M4 12h16M4 18h16",
+  logout: "M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 17l5-5-5-5M15 12H3",
+  user: "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z",
+  info: "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 11v6M12 7.5v.01",
+  eye: "M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z",
+  mail: "M3 6h18v12H3zM3 6l9 7 9-7",
+  play: "M7 4.5v15l12-7.5z",
+  refresh: "M3 12a9 9 0 0 1 15.5-6.2L21 8M21 3v5h-5M21 12a9 9 0 0 1-15.5 6.2L3 16M3 21v-5h5"
+};
+const ic = (n, size) => `<svg ${size ? `width="${size}" height="${size}"` : ""} viewBox="0 0 24 24" fill="${n === "play" ? "currentColor" : "none"}" stroke="${n === "play" ? "none" : "currentColor"}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${ICONS[n] || ""}"/></svg>`;
+
+/* ======================= safe Markdown subset ======================= */
+function md(src) {
+  src = String(src || "").replace(/\r\n?/g, "\n");
+  const keep = [];
+  const hold = html => "\u0001" + (keep.push(html) - 1) + "\u0002";
+  src = src.replace(/```[^\n]*\n([\s\S]*?)```/g, (m, code) => "\n" + hold("<pre><code>" + esc(code.replace(/\n$/, "")) + "</code></pre>") + "\n");
+  const inline = s => {
+    s = s.replace(/`([^`\n]+)`/g, (m, c) => hold("<code>" + esc(c) + "</code>"));
+    s = s.replace(/\[([^\]\n]+)\]\(((?:https?:\/\/|mailto:)[^)\s]+)\)/g, (m, t, u) => hold(`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}</a>`));
+    s = s.replace(/(^|[\s(])(https?:\/\/[^\s<>()]+[^\s<>().,;:!?'"])/g, (m, pre, u) => pre + hold(`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(u)}</a>`));
+    s = esc(s)
+      .replace(/\*\*([^*\n]+)\*\*/g, "<strong>$1</strong>")
+      .replace(/(^|[^*\w])\*([^*\s][^*\n]*?)\*(?!\w)/g, "$1<em>$2</em>")
+      .replace(/(^|[^_\w])_([^_\s][^_\n]*?)_(?!\w)/g, "$1<em>$2</em>");
+    return s;
+  };
+  const out = [];
+  for (const block of src.split(/\n{2,}/)) {
+    const lines = block.split("\n").filter(l => l.trim() !== "");
+    if (!lines.length) continue;
+    if (lines.length === 1 && /^\u0001\d+\u0002$/.test(lines[0].trim())) { out.push(lines[0].trim()); continue; }
+    if (lines.every(l => /^\s*[-*]\s+/.test(l))) { out.push("<ul>" + lines.map(l => "<li>" + inline(l.replace(/^\s*[-*]\s+/, "")) + "</li>").join("") + "</ul>"); continue; }
+    if (lines.every(l => /^\s*\d+[.)]\s+/.test(l))) { out.push("<ol>" + lines.map(l => "<li>" + inline(l.replace(/^\s*\d+[.)]\s+/, "")) + "</li>").join("") + "</ol>"); continue; }
+    if (lines.every(l => /^\s*>/.test(l))) { out.push("<blockquote>" + lines.map(l => inline(l.replace(/^\s*>\s?/, ""))).join("<br>") + "</blockquote>"); continue; }
+    const h = lines[0].match(/^(#{1,3})\s+(.*)$/);
+    if (h && lines.length === 1) { const n = h[1].length + 1; out.push(`<h${n}>${inline(h[2])}</h${n}>`); continue; }
+    out.push("<p>" + lines.map(inline).join("<br>") + "</p>");
+  }
+  return out.join("\n").replace(/\u0001(\d+)\u0002/g, (m, i) => keep[+i]);
+}
+
+/* ======================= exam grading (demo) ======================= */
+// Mirrors public.submit_exam() in supabase/setup.sql.
+function gradeExam(questions, keys, answers) {
+  let auto = 0, max = 0, review = false;
+  const per = {};
+  for (const q of questions) {
+    const pts = Number(q.points) || 0; max += pts;
+    const a = answers?.[q.id], k = keys[q.id];
+    let got = 0, state = "wrong";
+    if (q.kind === "mc" || q.kind === "tf") {
+      if (a !== undefined && a !== null && k !== undefined && k !== null && String(a).toLowerCase() === String(k).toLowerCase()) { got = pts; state = "right"; }
+    } else if (q.kind === "short" && Array.isArray(k) && k.length) {
+      if (a && k.some(x => String(x).trim().toLowerCase() === String(a).trim().toLowerCase())) { got = pts; state = "right"; }
+    } else { review = true; state = "review"; }
+    auto += got; per[q.id] = { got, state };
+  }
+  return { auto, max, review, per };
+}
+
+/* ========================= demo-mode storage ========================= */
+const DEMO_KEY = "dd-lms-demo-v1", DEMO_USER = "dd-lms-demo-user";
+class LocalStore {
+  constructor() { this.load(); }
+  load() {
+    try { this.d = JSON.parse(localStorage.getItem(DEMO_KEY)); } catch { this.d = null; }
+    if (!this.d || !this.d.course) { this.d = seedDemo(); this.persist(); }
+  }
+  persist() {
+    try { localStorage.setItem(DEMO_KEY, JSON.stringify(this.d)); }
+    catch { throw new Error("This browser's storage is full. Remove some demo files, or reset the demo in Course settings."); }
+  }
+  reset() { localStorage.removeItem(DEMO_KEY); this.load(); }
+  async session() {
+    let id; try { id = localStorage.getItem(DEMO_USER); } catch {}
+    this.me = this.d.profiles.find(p => p.id === id) || this.d.profiles.find(p => p.role === "instructor");
+    return this.me;
+  }
+  switchUser(id) { localStorage.setItem(DEMO_USER, id); }
+  async signOut() {}
+  get isInstructor() { return this.me?.role === "instructor"; }
+  visible(table, r) {
+    if (this.isInstructor) return true;
+    const me = this.me.id;
+    switch (table) {
+      case "profiles": return r.id === me || r.role === "instructor";
+      case "assignments": case "exams": return r.published;
+      case "submissions": case "messages": case "exam_attempts": return r.student_id === me;
+      case "exam_results": return r.student_id === me && (r.released || this.d.exams.find(e => e.id === r.exam_id)?.show_results);
+      case "exam_questions": return this.d.exam_attempts.some(a => a.exam_id === r.exam_id && a.student_id === me);
+      case "exam_keys": return false;
+      default: return true;
+    }
+  }
+  async getCourse() { return { ...this.d.course }; }
+  async list(table, { eq = {}, order, desc } = {}) {
+    let rows = (this.d[table] || []).filter(r => this.visible(table, r) && Object.entries(eq).every(([k, v]) => r[k] === v));
+    rows = rows.map(r => JSON.parse(JSON.stringify(r)));
+    if (order) rows.sort((a, b) => (a[order] > b[order] ? 1 : a[order] < b[order] ? -1 : 0) * (desc ? -1 : 1));
+    return rows;
+  }
+  async save(table, row, pk = "id") {
+    if (table === "course") { this.need(); Object.assign(this.d.course, row, { updated_at: nowIso() }); this.persist(); return this.d.course; }
+    const list = this.d[table] || (this.d[table] = []);
+    const i = row[pk] ? list.findIndex(r => r[pk] === row[pk]) : -1;
+    let next;
+    if (i >= 0) {
+      const old = list[i];
+      next = { ...old, ...row };
+      if (table === "submissions") {
+        if (this.isInstructor) { next.submitted_at = old.submitted_at; if (next.grade !== old.grade || next.feedback !== old.feedback) next.graded_at = nowIso(); }
+        else { if (old.grade !== null && old.grade !== undefined) throw new Error("This submission has been graded, so it can't be changed."); Object.assign(next, { student_id: old.student_id, grade: old.grade, feedback: old.feedback, graded_at: old.graded_at, submitted_at: nowIso() }); }
+      } else if (table === "profiles" && !this.isInstructor) { next.role = old.role; next.email = old.email; }
+      else if (!["profiles", "messages"].includes(table)) this.need();
+      list[i] = next;
+    } else {
+      next = { created_at: nowIso(), ...row };
+      if (pk === "id" && !next.id) next.id = uid();
+      if (table === "submissions") {
+        if (!this.isInstructor) Object.assign(next, { student_id: this.me.id, grade: null, feedback: null, graded_at: null, submitted_at: nowIso() });
+      } else if (table === "messages") { next.sender_id = this.me.id; if (!this.isInstructor) next.student_id = this.me.id; next.read_at = null; }
+      else if (table !== "profiles") this.need();
+      list.push(next);
+    }
+    this.persist();
+    return JSON.parse(JSON.stringify(next));
+  }
+  async insertMany(table, rows) { for (const r of rows) await this.save(table, r, table === "exam_keys" ? "question_id" : "id"); }
+  async remove(table, id, pk = "id") {
+    this.need();
+    const cascade = { modules: [["materials", "module_id"]], assignments: [["submissions", "assignment_id"]], exams: [["exam_questions", "exam_id"], ["exam_attempts", "exam_id"], ["exam_results", "exam_id"]], exam_questions: [["exam_keys", "question_id"]] };
+    const kill = (t, col, val) => {
+      for (const r of (this.d[t] || []).filter(r => r[col] === val)) for (const [ct, cc] of cascade[t] || []) kill(ct, cc, r.id);
+      this.d[t] = (this.d[t] || []).filter(r => r[col] !== val);
+    };
+    kill(table, pk, id);
+    if (table === "materials" || table === "submissions") {/* files stay in the demo store until reset */}
+    this.persist();
+  }
+  async removeWhere(table, col, values) { this.need(); this.d[table] = (this.d[table] || []).filter(r => !values.includes(r[col])); this.persist(); }
+  async markRead(studentId) {
+    for (const m of this.d.messages) if (m.student_id === studentId && m.sender_id !== this.me.id && !m.read_at) m.read_at = nowIso();
+    this.persist();
+  }
+  async startExam(examId) {
+    const e = this.d.exams.find(x => x.id === examId && x.published);
+    if (!e) throw new Error("This exam is not available.");
+    let a = this.d.exam_attempts.find(x => x.exam_id === examId && x.student_id === this.me.id);
+    if (a) return { ...a };
+    if (e.opens_at && Date.now() < new Date(e.opens_at)) throw new Error("This exam has not opened yet.");
+    if (e.closes_at && Date.now() > new Date(e.closes_at)) throw new Error("This exam has closed.");
+    a = { id: uid(), exam_id: examId, student_id: this.me.id, started_at: nowIso(), submitted_at: null, late: false, answers: {} };
+    this.d.exam_attempts.push(a); this.persist();
+    return { ...a };
+  }
+  async submitExam(examId, answers) {
+    const e = this.d.exams.find(x => x.id === examId);
+    const a = this.d.exam_attempts.find(x => x.exam_id === examId && x.student_id === this.me.id);
+    if (!a) throw new Error("Start the exam before submitting.");
+    if (a.submitted_at) throw new Error("You have already submitted this exam.");
+    const qs = this.d.exam_questions.filter(q => q.exam_id === examId);
+    const keys = Object.fromEntries(this.d.exam_keys.map(k => [k.question_id, k.answer]));
+    const g = gradeExam(qs, keys, answers);
+    const ends = [e.time_limit_min ? new Date(a.started_at).getTime() + e.time_limit_min * 60000 : null, e.closes_at ? new Date(e.closes_at).getTime() : null].filter(Boolean);
+    const late = ends.length > 0 && Date.now() > Math.min(...ends) + 120000;
+    Object.assign(a, { submitted_at: nowIso(), answers: answers || {}, late });
+    this.d.exam_results.push({ attempt_id: a.id, exam_id: examId, student_id: this.me.id, auto_score: g.auto, max_score: g.max, manual: {}, total: g.auto, needs_review: g.review, released: false, graded_at: nowIso() });
+    this.persist();
+    return e.show_results ? { total: g.auto, max: g.max, needs_review: g.review, late } : { hidden: true, late };
+  }
+  async upload(bucket, path, file) {
+    if (file.size > 3 * 1024 * 1024) throw new Error("In demo mode files must be under 3 MB (they're kept in this browser). The live site allows up to 25 MB.");
+    const data = await new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = () => rej(r.error); r.readAsDataURL(file); });
+    (this.d.files || (this.d.files = {}))[bucket + "/" + path] = data;
+    this.persist();
+    return path;
+  }
+  async fileUrl(bucket, path) {
+    const f = this.d.files?.[bucket + "/" + path];
+    if (!f) throw new Error("This sample file isn't stored in the demo. Upload your own to try it.");
+    return f;
+  }
+  async addDemoStudent(name) {
+    const p = { id: uid(), email: name.toLowerCase().replace(/[^a-z]+/g, ".").replace(/^\.|\.$/g, "") + "@student.example", full_name: name, role: "student", created_at: nowIso() };
+    this.d.profiles.push(p); this.persist(); return p;
+  }
+  need() { if (!this.isInstructor) throw new Error("You don't have permission to do that."); }
+}
+
+function seedDemo() {
+  const H = 3600e3, D = 24 * H, t = ms => new Date(Date.now() + ms).toISOString();
+  const T = { id: "u-teacher", email: "dawit@example.com", full_name: "Dawit Demissie", role: "instructor", created_at: t(-30 * D) };
+  const S = [["u-abebe", "Abebe Kebede"], ["u-sara", "Sara Tesfaye"], ["u-liya", "Liya Haile"], ["u-yonas", "Yonas Alemu"], ["u-hanna", "Hanna Girma"]]
+    .map(([id, n], i) => ({ id, email: n.split(" ")[0].toLowerCase() + "@student.example", full_name: n, role: "student", created_at: t(-(25 - i) * D) }));
+  const m1 = "m-1", m2 = "m-2", m3 = "m-3", a1 = "a-1", a2 = "a-2", a0 = "a-0", e1 = "e-1";
+  const q = (id, pos, kind, prompt, points, options = []) => ({ id, exam_id: e1, position: pos, kind, prompt, points, options });
+  return {
+    course: { id: 1, title: "Introduction to SQL", code: "SQL 101", term: "Fall 2026", description: "Learn to ask questions of real data with SQL: selecting, filtering, sorting, grouping and joining tables. Every week has short notes, practice in the **SQL Workspace**, and one assignment.", updated_at: t(-D) },
+    profiles: [T, ...S],
+    modules: [
+      { id: m1, title: "Week 1 · Getting started", position: 1, created_at: t(-20 * D) },
+      { id: m2, title: "Week 2 · Filtering and sorting", position: 2, created_at: t(-13 * D) },
+      { id: m3, title: "Week 3 · Joining tables", position: 3, created_at: t(-6 * D) }
+    ],
+    materials: [
+      { id: "mt-1", module_id: m1, title: "Welcome and how this course works", kind: "note", position: 1, created_at: t(-20 * D), body: "Welcome! Each week has:\n\n- short **notes** to read\n- practice queries in the SQL Workspace\n- one **assignment**, due Sunday night\n\nAsk questions any time in **Messages**." },
+      { id: "mt-2", module_id: m1, title: "Practice in the SQL Workspace", kind: "link", position: 2, created_at: t(-20 * D), url: "https://demisse-sql.netlify.app/", body: "Run queries on real job-postings data in your browser." },
+      { id: "mt-3", module_id: m1, title: "Your first SELECT", kind: "note", position: 3, created_at: t(-19 * D), body: "A query starts with `SELECT` and `FROM`:\n\n```\nSELECT job_title, salary_year_avg\nFROM job_postings_fact\nLIMIT 10;\n```\n\n`LIMIT` keeps the result short while you explore." },
+      { id: "mt-4", module_id: m2, title: "WHERE, AND, OR", kind: "note", position: 1, created_at: t(-13 * D), body: "Use `WHERE` to keep only matching rows:\n\n```\nSELECT *\nFROM job_postings_fact\nWHERE job_title_short = 'Data Analyst'\n  AND job_work_from_home = 1;\n```" },
+      { id: "mt-5", module_id: m2, title: "ORDER BY and LIMIT", kind: "note", position: 2, created_at: t(-12 * D), body: "Sort with `ORDER BY column DESC` for largest first. Combine with `LIMIT 10` for a top-10 list." },
+      { id: "mt-6", module_id: m3, title: "INNER JOIN vs LEFT JOIN", kind: "note", position: 1, created_at: t(-6 * D), body: "- **INNER JOIN** keeps rows that match in both tables.\n- **LEFT JOIN** keeps every row from the first table, even without a match." }
+    ],
+    announcements: [
+      { id: "an-1", title: "Welcome to SQL 101!", body: "I'm glad you're here. Start with **Week 1** in Materials, then try the practice queries.\n\nOffice hours: Wednesdays 4–5 pm.", pinned: true, author_id: T.id, created_at: t(-20 * D) },
+      { id: "an-2", title: "Quiz 1 is open", body: "Quiz 1 covers weeks 1–2. You have **20 minutes** once you press Start, so find a quiet moment first.", pinned: false, author_id: T.id, created_at: t(-2 * D) },
+      { id: "an-3", title: "Assignment 1 grades are out", body: "Nice work, everyone. Read the feedback on your submission, and message me if anything is unclear.", pinned: false, author_id: T.id, created_at: t(-5 * H) }
+    ],
+    assignments: [
+      { id: a0, title: "Assignment 1 · Your first queries", instructions: "Write three queries on the job-postings data:\n\n1. The first 10 rows of `job_postings_fact`\n2. Only remote jobs\n3. The 5 highest yearly salaries\n\nPaste your SQL below, or upload a `.sql` file.", due_at: t(-6 * D), points: 10, allow_text: true, allow_file: true, published: true, created_at: t(-18 * D) },
+      { id: a1, title: "Assignment 2 · Filtering practice", instructions: "Answer each question with one query:\n\n1. How many Data Analyst jobs are remote?\n2. Which 10 companies posted the most jobs?\n\nSubmit your SQL and a one-line answer for each.", due_at: t(4 * D), points: 20, allow_text: true, allow_file: true, published: true, created_at: t(-10 * D) },
+      { id: a2, title: "Assignment 3 · Joins", instructions: "Join `skills_job_dim` with `skills_dim` to list the 10 most requested skills.", due_at: t(11 * D), points: 20, allow_text: true, allow_file: true, published: false, created_at: t(-1 * D) }
+    ],
+    submissions: [
+      { id: "s-1", assignment_id: a0, student_id: "u-abebe", body: "SELECT * FROM job_postings_fact LIMIT 10;\nSELECT * FROM job_postings_fact WHERE job_work_from_home = 1;\nSELECT job_title, salary_year_avg FROM job_postings_fact ORDER BY salary_year_avg DESC LIMIT 5;", file_path: null, file_name: null, submitted_at: t(-7 * D), grade: 9, feedback: "Great! For #3, add WHERE salary_year_avg IS NOT NULL so empty salaries don't sort to the top.", graded_at: t(-5 * H) },
+      { id: "s-2", assignment_id: a0, student_id: "u-sara", body: "SELECT * FROM job_postings_fact LIMIT 10;\nSELECT * FROM job_postings_fact WHERE job_work_from_home = 1;\nSELECT * FROM job_postings_fact ORDER BY salary_year_avg DESC LIMIT 5;", file_path: null, file_name: null, submitted_at: t(-6 * D - 3 * H), grade: 10, feedback: "Perfect.", graded_at: t(-5 * H) },
+      { id: "s-3", assignment_id: a0, student_id: "u-liya", body: "SELECT * FROM job_postings_fact LIMIT 10;", file_path: null, file_name: null, submitted_at: t(-5 * D), grade: null, feedback: null, graded_at: null },
+      { id: "s-4", assignment_id: a1, student_id: "u-sara", body: "1. SELECT COUNT(*) FROM job_postings_fact WHERE job_title_short = 'Data Analyst' AND job_work_from_home = 1;\n→ 1,412 jobs", file_path: null, file_name: null, submitted_at: t(-1 * D), grade: null, feedback: null, graded_at: null }
+    ],
+    exams: [
+      { id: e1, title: "Quiz 1 · SQL basics", instructions: "Five questions on weeks 1–2. You have **20 minutes** from the moment you press Start, and one attempt.", time_limit_min: 20, opens_at: t(-2 * D), closes_at: t(5 * D), show_results: true, published: true, created_at: t(-3 * D) }
+    ],
+    exam_questions: [
+      q("q-1", 1, "mc", "Which keyword chooses the columns a query returns?", 2, ["FROM", "SELECT", "WHERE", "ORDER BY"]),
+      q("q-2", 2, "tf", "`WHERE` filters rows before they are grouped.", 1),
+      q("q-3", 3, "mc", "Which clause sorts the result?", 2, ["GROUP BY", "LIMIT", "ORDER BY", "HAVING"]),
+      q("q-4", 4, "short", "Which keyword limits the number of rows returned?", 2),
+      q("q-5", 5, "essay", "In one or two sentences, explain when you would use `LIMIT` while exploring a new table.", 3)
+    ],
+    exam_keys: [{ question_id: "q-1", answer: 1 }, { question_id: "q-2", answer: true }, { question_id: "q-3", answer: 2 }, { question_id: "q-4", answer: ["LIMIT"] }],
+    exam_attempts: [{ id: "at-1", exam_id: e1, student_id: "u-sara", started_at: t(-D - 20 * 60e3), submitted_at: t(-D - 4 * 60e3), late: false, answers: { "q-1": 1, "q-2": true, "q-3": 2, "q-4": "limit", "q-5": "To see a few rows quickly without loading the whole table." } }],
+    exam_results: [{ attempt_id: "at-1", exam_id: e1, student_id: "u-sara", auto_score: 7, max_score: 10, manual: {}, total: 7, needs_review: true, released: false, graded_at: t(-D) }],
+    messages: [
+      { id: "ms-1", student_id: "u-abebe", sender_id: "u-abebe", body: "Hi! For Assignment 2, should the company names come from company_dim?", created_at: t(-3 * H), read_at: null },
+      { id: "ms-2", student_id: "u-sara", sender_id: "u-sara", body: "Thanks for the quick feedback on Assignment 1!", created_at: t(-2 * D), read_at: t(-2 * D + H) },
+      { id: "ms-3", student_id: "u-sara", sender_id: T.id, body: "You're welcome, Sara. Keep it up!", created_at: t(-2 * D + 2 * H), read_at: t(-D) }
+    ],
+    files: {}
+  };
+}
+
+/* ========================= live-mode storage ========================= */
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+function loadScript(src) {
+  return new Promise((res, rej) => { const s = document.createElement("script"); s.src = src; s.onload = res; s.onerror = () => rej(new Error("Couldn't load " + src)); document.head.appendChild(s); });
+}
+class SupaStore {
+  async init() {
+    if (!window.supabase) await loadScript(SUPABASE_JS);
+    this.sb = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: "implicit" } });
+  }
+  async session() {
+    const { data, error } = await this.sb.auth.getSession();
+    if (error) throw error;
+    if (!data.session) return null;
+    this.user = data.session.user;
+    for (let i = 0; i < 5; i++) {
+      const r = await this.sb.from("profiles").select("*").eq("id", this.user.id).maybeSingle();
+      if (r.error) throw r.error;
+      if (r.data) return (this.me = r.data);
+      await sleep(700);
+    }
+    throw new Error("Your account has no profile yet. Make sure supabase/setup.sql was run, then sign in again.");
+  }
+  async signIn(email) {
+    const { error } = await this.sb.auth.signInWithOtp({ email, options: { emailRedirectTo: location.origin + location.pathname, shouldCreateUser: true } });
+    if (error) throw error;
+  }
+  async signInPassword(email, password) {
+    const { error } = await this.sb.auth.signInWithPassword({ email, password });
+    if (error) throw error;
+  }
+  async signUp(fullName, email, password) {
+    const { data, error } = await this.sb.auth.signUp({ email, password, options: { data: { full_name: fullName }, emailRedirectTo: location.origin + location.pathname } });
+    if (error) throw error;
+    return !!data.session; // false when Supabase wants the email confirmed first
+  }
+  async resetPassword(email) {
+    const { error } = await this.sb.auth.resetPasswordForEmail(email, { redirectTo: location.origin + location.pathname });
+    if (error) throw error;
+  }
+  async updatePassword(password) { const { error } = await this.sb.auth.updateUser({ password }); if (error) throw error; }
+  async signOut() { await this.sb.auth.signOut(); }
+  get isInstructor() { return this.me?.role === "instructor"; }
+  async getCourse() {
+    const { data, error } = await this.sb.from("course").select("*").eq("id", 1).maybeSingle();
+    if (error) throw error;
+    return data || { title: "My Course", code: "", term: "", description: "" };
+  }
+  async list(table, { eq = {}, order, desc } = {}) {
+    let q = this.sb.from(table).select("*");
+    for (const [k, v] of Object.entries(eq)) q = q.eq(k, v);
+    if (order) q = q.order(order, { ascending: !desc });
+    const { data, error } = await q;
+    if (error) throw error;
+    return data || [];
+  }
+  async save(table, row, pk = "id", opts = {}) {
+    const clean = Object.fromEntries(Object.entries(row).filter(([k, v]) => v !== undefined && !k.startsWith("_")));
+    if (table === "course") {
+      delete clean.id; delete clean.updated_at;
+      const { data, error } = await this.sb.from("course").update(clean).eq("id", 1).select().single();
+      if (error) throw error; return data;
+    }
+    if (clean[pk] && !opts.insert) {
+      const id = clean[pk]; delete clean[pk];
+      const { data, error } = await this.sb.from(table).update(clean).eq(pk, id).select().maybeSingle();
+      if (error) throw error;
+      if (!data) throw new Error("That couldn't be saved. It may have been deleted, or you don't have permission to change it.");
+      return data;
+    }
+    const { data, error } = await this.sb.from(table).insert(clean).select().single();
+    if (error) throw error;
+    return data;
+  }
+  async insertMany(table, rows) { if (!rows.length) return; const { error } = await this.sb.from(table).insert(rows); if (error) throw error; }
+  async remove(table, id, pk = "id") { const { error } = await this.sb.from(table).delete().eq(pk, id); if (error) throw error; }
+  async removeWhere(table, col, values) { if (!values.length) return; const { error } = await this.sb.from(table).delete().in(col, values); if (error) throw error; }
+  async markRead(studentId) {
+    const { error } = await this.sb.from("messages").update({ read_at: nowIso() }).eq("student_id", studentId).neq("sender_id", this.me.id).is("read_at", null);
+    if (error) throw error;
+  }
+  async startExam(examId) { const { data, error } = await this.sb.rpc("start_exam", { p_exam: examId }); if (error) throw error; return data; }
+  async submitExam(examId, answers) { const { data, error } = await this.sb.rpc("submit_exam", { p_exam: examId, p_answers: answers || {} }); if (error) throw error; return data; }
+  async upload(bucket, path, file) {
+    if (file.size > 25 * 1024 * 1024) throw new Error("Files must be under 25 MB.");
+    const { error } = await this.sb.storage.from(bucket).upload(path, file, { upsert: true, contentType: file.type || undefined });
+    if (error) throw error;
+    return path;
+  }
+  async fileUrl(bucket, path) {
+    const { data, error } = await this.sb.storage.from(bucket).createSignedUrl(path, 3600);
+    if (error) throw error;
+    return data.signedUrl;
+  }
+}
+
+/* ============================== state ============================== */
+const S = { store: null, me: null, course: null, tok: 0, timers: [] };
+const isT = () => S.me?.role === "instructor";
+const store = () => S.store;
+const seenKey = () => "dd-lms-seen-" + (S.me?.id || "");
+function lastSeen() { try { return localStorage.getItem(seenKey()) || "1970"; } catch { return "1970"; } }
+function markSeen() { try { localStorage.setItem(seenKey(), nowIso()); } catch {} }
+function clearTimers() { S.timers.forEach(clearInterval); S.timers = []; window.onbeforeunload = null; }
+function examWindow(e) {
+  const n = Date.now();
+  if (e.opens_at && n < new Date(e.opens_at)) return "upcoming";
+  if (e.closes_at && n > new Date(e.closes_at)) return "closed";
+  return "open";
+}
+
+/* ============================== UI kit ============================== */
+function paint(tok, html) {
+  if (tok !== S.tok) return false;
+  const m = $("#main"); m.innerHTML = `<div class="page">${html}</div>`; m.scrollTop = 0; return true;
+}
+function head(title, sub, actions = "", crumb = "") {
+  return `${crumb ? `<div class="crumb">${crumb}</div>` : ""}<div class="page-head"><div style="flex:1;min-width:240px"><h1>${title}</h1>${sub ? `<div class="sub">${sub}</div>` : ""}</div>${actions ? `<div class="row">${actions}</div>` : ""}</div>`;
+}
+const empty = (icon, text, extra = "") => `<div class="empty">${ic(icon)}<div>${text}</div>${extra}</div>`;
+
+function modal({ title, body, ok = "Save", okClass = "primary", wide, cancel = "Cancel", onOk, onMount }) {
+  return new Promise(resolve => {
+    const back = document.createElement("div");
+    back.className = "modal-back";
+    back.innerHTML = `<form class="modal${wide ? " wide" : ""}" role="dialog" aria-modal="true" aria-label="${esc(title)}" novalidate>
+      <header><h2>${esc(title)}</h2><button type="button" class="btn ghost icon" data-x aria-label="Close">${ic("x")}</button></header>
+      <div class="mbody">${body}</div>
+      <footer>${cancel ? `<button type="button" class="btn" data-x>${esc(cancel)}</button>` : ""}${ok ? `<button type="submit" class="btn ${okClass}">${esc(ok)}</button>` : ""}</footer></form>`;
+    const prev = document.activeElement;
+    const close = v => { back.remove(); document.removeEventListener("keydown", onKey); prev?.focus?.(); resolve(v); };
+    const onKey = e => { if (e.key === "Escape") close(null); };
+    document.addEventListener("keydown", onKey);
+    back.addEventListener("mousedown", e => { if (e.target === back) close(null); });
+    $$("[data-x]", back).forEach(b => b.onclick = () => close(null));
+    const form = $("form", back);
+    form.onsubmit = async e => {
+      e.preventDefault();
+      const btn = $("footer button[type=submit]", back);
+      if (!onOk) return close(true);
+      btn.disabled = true; const label = btn.textContent; btn.innerHTML = `<span class="spin" style="width:16px;height:16px;border-width:2px"></span> ${esc(label)}`;
+      try { const r = await onOk(form); if (r !== false) close(r === undefined ? true : r); }
+      catch (err) { toast(errMsg(err), true); }
+      finally { if (btn.isConnected) { btn.disabled = false; btn.textContent = label; } }
+    };
+    document.body.appendChild(back);
+    onMount?.(form);
+    (form.querySelector("[autofocus]") || form.querySelector("input,textarea,select,button[type=submit]"))?.focus();
+  });
+}
+const confirmBox = (title, text, ok = "Delete") => modal({ title, body: `<p>${text}</p>`, ok, okClass: ok === "Delete" ? "btn danger" : "primary" });
+const fval = (form, n) => form.elements[n]?.value?.trim() ?? "";
+
+async function openFile(bucket, path, name) {
+  try {
+    const url = await store().fileUrl(bucket, path);
+    const a = document.createElement("a");
+    a.href = url; a.target = "_blank"; a.rel = "noopener";
+    if (url.startsWith("data:")) a.download = name || "file";
+    document.body.appendChild(a); a.click(); a.remove();
+  } catch (e) { toast(errMsg(e), true); }
+}
+
+/* ============================== shell ============================== */
+const NAV = [
+  ["home", "Home", "home"], ["announcements", "Announcements", "megaphone"], ["materials", "Materials", "book"],
+  ["assignments", "Assignments", "clipboard"], ["exams", "Exams", "exam"], ["messages", "Messages", "chat"], ["grades", "Grades", "chart"]
+];
+const NAV_T = [["people", "People", "people"], ["settings", "Course settings", "gear"]];
+
+function renderShell() {
+  const t = isT(), c = S.course || {};
+  const people = DEMO ? store().d.profiles : [];
+  $("#app").innerHTML = `
+  <header class="top">
+    <button class="btn ghost icon menu-btn" id="navBtn" aria-label="Open menu">${ic("menu")}</button>
+    <a class="logo" href="#/home" title="Home"><img id="logoImg" alt="Dawit Demissie — SELECT * FROM sql_lessons;" width="216" height="42"></a>
+    <div class="course-id"><b>${esc(c.title || "Course")}</b><span>${esc([c.code, c.term].filter(Boolean).join(" · "))}</span></div>
+    <span class="spacer"></span>
+    ${DEMO ? `<label class="demo-pick" title="Demo mode: see the site as the instructor or as a student"><span class="lbl">Viewing as</span>
+      <select id="demoUser">${people.map(p => `<option value="${esc(p.id)}" ${p.id === S.me.id ? "selected" : ""}>${esc(p.full_name)}${p.role === "instructor" ? " (instructor)" : ""}</option>`).join("")}</select></label>` : ""}
+    <button class="btn ghost icon" id="themeBtn" aria-label="Switch theme"></button>
+    <div style="position:relative">
+      <button class="who" id="whoBtn" aria-haspopup="menu" aria-expanded="false">${avatar(S.me)}<span style="text-align:left;display:flex;flex-direction:column;line-height:1.15"><span class="nm">${esc(displayName(S.me))}</span><span class="rl">${t ? "Instructor" : "Student"}</span></span></button>
+      <div class="menu hidden" id="whoMenu" role="menu">
+        <div class="mh"><b>${esc(displayName(S.me))}</b><div class="muted">${esc(S.me.email || "")}</div></div>
+        <button role="menuitem" data-act="name">${ic("user")} Change my name</button>
+        ${DEMO ? `<button role="menuitem" data-act="reset">${ic("refresh")} Reset demo data</button>` : `<button role="menuitem" data-act="password">${ic("gear")} Change my password</button><button role="menuitem" data-act="signout">${ic("logout")} Sign out</button>`}
+      </div>
+    </div>
+  </header>
+  ${DEMO ? `<div class="banner">${ic("info")}<span><b>Demo mode.</b> Everything is saved only in this browser. Use “Viewing as” to see the student side. ${t ? `<a href="#/settings">How to go live</a>` : ""}</span></div>` : ""}
+  <div class="layout">
+    <nav class="side" id="nav" aria-label="Course">
+      ${NAV.map(([k, l, i]) => `<a href="#/${k}" data-nav="${k}">${ic(i)}<span>${l}</span><span class="badge hidden" data-badge="${k}"></span></a>`).join("")}
+      ${t ? `<div class="sep"></div><div class="label">Instructor</div>${NAV_T.map(([k, l, i]) => `<a href="#/${k}" data-nav="${k}">${ic(i)}<span>${l}</span></a>`).join("")}` : ""}
+    </nav>
+    <main id="main" tabindex="-1"></main>
+  </div>`;
+  updateThemeUi();
+  $("#themeBtn").onclick = () => setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+  $("#navBtn").onclick = () => document.body.classList.toggle("nav-open");
+  $("#nav").addEventListener("click", () => document.body.classList.remove("nav-open"));
+  document.addEventListener("click", e => { if (document.body.classList.contains("nav-open") && !e.target.closest("#nav,#navBtn")) document.body.classList.remove("nav-open"); });
+  const menu = $("#whoMenu"), who = $("#whoBtn");
+  who.onclick = e => { e.stopPropagation(); menu.classList.toggle("hidden"); who.setAttribute("aria-expanded", !menu.classList.contains("hidden")); };
+  document.addEventListener("click", e => { if (!e.target.closest("#whoMenu")) { menu.classList.add("hidden"); who.setAttribute("aria-expanded", "false"); } });
+  menu.onclick = async e => {
+    const b = e.target.closest("[data-act]"); if (!b) return; menu.classList.add("hidden");
+    if (b.dataset.act === "name") askName(false);
+    if (b.dataset.act === "password") askPassword(false);
+    if (b.dataset.act === "signout") { await store().signOut(); location.hash = ""; location.reload(); }
+    if (b.dataset.act === "reset") { if (await confirmBox("Reset the demo?", "This puts back the sample course and removes everything you added in demo mode.", "Reset")) { store().reset(); location.reload(); } }
+  };
+  if (DEMO) $("#demoUser").onchange = e => { store().switchUser(e.target.value); location.reload(); };
+}
+function setTheme(t) {
+  document.documentElement.setAttribute("data-theme", t);
+  try { localStorage.setItem("dd-lms-theme", t); } catch {}
+  updateThemeUi();
+}
+function updateThemeUi() {
+  const dark = document.documentElement.dataset.theme === "dark";
+  $$("img#logoImg,img.auth-logo").forEach(i => (i.src = dark ? "logo-dark.png" : "logo-light.png"));
+  const b = $("#themeBtn"); if (b) { b.innerHTML = ic(dark ? "sun" : "moon"); b.title = b.ariaLabel = dark ? "Switch to light mode" : "Switch to dark mode"; }
+}
+function setBadge(k, n, amber) {
+  const b = $(`[data-badge="${k}"]`); if (!b) return;
+  b.textContent = n > 99 ? "99+" : n; b.classList.toggle("hidden", !n); b.classList.toggle("amber", !!amber);
+}
+async function refreshBadges() {
+  try {
+    const st = store(), t = isT();
+    const [ann, msgs] = await Promise.all([st.list("announcements"), st.list("messages")]);
+    const seen = lastSeen();
+    setBadge("announcements", ann.filter(a => a.created_at > seen && a.author_id !== S.me.id).length);
+    setBadge("messages", msgs.filter(m => !m.read_at && m.sender_id !== S.me.id).length);
+    if (t) {
+      const [subs, res] = await Promise.all([st.list("submissions"), st.list("exam_results")]);
+      setBadge("assignments", subs.filter(s => s.grade === null || s.grade === undefined).length, true);
+      setBadge("exams", res.filter(r => r.needs_review).length, true);
+    } else {
+      const [as, subs, exams, atts] = await Promise.all([st.list("assignments"), st.list("submissions"), st.list("exams"), st.list("exam_attempts")]);
+      const soon = Date.now() + 7 * 864e5;
+      setBadge("assignments", as.filter(a => !subs.some(s => s.assignment_id === a.id) && a.due_at && new Date(a.due_at) > Date.now() && new Date(a.due_at) < soon).length, true);
+      setBadge("exams", exams.filter(e => examWindow(e) === "open" && !atts.some(x => x.exam_id === e.id && x.submitted_at)).length, true);
+    }
+  } catch { /* badges are a nicety */ }
+}
+async function askName(firstTime) {
+  return modal({
+    title: firstTime ? "Welcome! What's your name?" : "Change my name",
+    body: `${firstTime ? `<p class="muted">Your instructor will see this name next to your work and messages.</p>` : ""}
+      <label class="field">Full name<input type="text" name="name" required maxlength="80" value="${esc(S.me.full_name || "")}" autofocus></label>`,
+    cancel: firstTime ? "" : "Cancel",
+    onOk: async f => {
+      const name = fval(f, "name");
+      if (!name) { toast("Please enter your name.", true); return false; }
+      S.me = await store().save("profiles", { id: S.me.id, full_name: name });
+      if (DEMO) store().me = S.me;
+      renderShell(); render();
+      toast("Name saved");
+    }
+  });
+}
+function askPassword(recovery) {
+  return modal({
+    title: recovery ? "Choose a new password" : "Change my password",
+    body: `<div class="stack"><label class="field">New password <span class="hint">At least 8 characters.</span><input type="password" name="pw" minlength="8" autocomplete="new-password" required autofocus></label>
+      <label class="field">Type it again<input type="password" name="pw2" autocomplete="new-password" required></label></div>`,
+    cancel: recovery ? "" : "Cancel",
+    onOk: async f => {
+      const pw = f.elements.pw.value;
+      if (pw.length < 8) { toast("Use at least 8 characters.", true); return false; }
+      if (pw !== f.elements.pw2.value) { toast("The two passwords don't match.", true); return false; }
+      await store().updatePassword(pw); toast("Password updated");
+    }
+  });
+}
+
+/* ============================== router ============================== */
+const ROUTES = {};
+async function render() {
+  clearTimers();
+  const parts = location.hash.replace(/^#\/?/, "").split("?")[0].split("/").filter(Boolean).map(decodeURIComponent);
+  const name = parts[0] || "home";
+  const tok = ++S.tok;
+  $$("nav.side a").forEach(a => a.classList.toggle("on", a.dataset.nav === name));
+  const view = ROUTES[name] || ROUTES.home;
+  $("#main").innerHTML = `<div class="page"><div class="empty"><span class="spin"></span></div></div>`;
+  try { await view(tok, ...parts.slice(1)); }
+  catch (e) { console.error(e); paint(tok, `<div class="card pad"><h2>Something went wrong</h2><p class="muted" style="margin-top:6px">${esc(errMsg(e))}</p><button class="btn" onclick="location.reload()">${ic("refresh")} Reload</button></div>`); }
+  refreshBadges();
+}
+
+/* ============================== home ============================== */
+ROUTES.home = async tok => {
+  const st = store(), t = isT(), c = S.course;
+  const [ann, asg, subs, exams, atts, msgs, people, res] = await Promise.all([
+    st.list("announcements"), st.list("assignments"), st.list("submissions"), st.list("exams"), st.list("exam_attempts"), st.list("messages"), st.list("profiles"), st.list("exam_results")]);
+  const annSorted = ann.sort((a, b) => (b.pinned - a.pinned) || b.created_at.localeCompare(a.created_at)).slice(0, 3);
+  const annHtml = annSorted.length ? annSorted.map(a => `<a class="item" href="#/announcements"><span class="tile ${a.pinned ? "t-amber" : "t-teal"}">${ic(a.pinned ? "pin" : "megaphone")}</span><div style="min-width:0"><div class="ttl">${esc(a.title)}</div><div class="meta">${relTime(a.created_at)}</div></div></a>`).join("") : empty("megaphone", "No announcements yet.");
+  const hero = `<div class="card hero"><div class="code">${esc([c.code, c.term].filter(Boolean).join(" · ") || "SELECT * FROM sql_lessons;")}</div><h1>${esc(c.title)}</h1>${c.description ? `<div class="md muted" style="max-width:72ch">${md(c.description)}</div>` : ""}</div>`;
+
+  if (t) {
+    const students = people.filter(p => p.role === "student");
+    const toGrade = subs.filter(s => s.grade === null || s.grade === undefined);
+    const toReview = res.filter(r => r.needs_review);
+    const unread = msgs.filter(m => !m.read_at && m.sender_id !== S.me.id);
+    const upcoming = asg.filter(a => a.due_at && new Date(a.due_at) > Date.now()).sort((a, b) => a.due_at.localeCompare(b.due_at));
+    const stat = (n, label, icon, color, href) => `<a class="card stat" href="${href}" style="text-decoration:none;color:inherit"><span class="tile ${color}">${ic(icon)}</span><div><b>${n}</b><span>${label}</span></div></a>`;
+    const attention = [
+      ...asg.map(a => ({ a, n: toGrade.filter(s => s.assignment_id === a.id).length })).filter(x => x.n).map(x => `<a class="item" href="#/assignments/${x.a.id}"><span class="tile t-amber">${ic("clipboard")}</span><div style="flex:1"><div class="ttl">${esc(x.a.title)}</div><div class="meta">${x.n} submission${x.n === 1 ? "" : "s"} to grade</div></div></a>`),
+      ...exams.map(e => ({ e, n: toReview.filter(r => r.exam_id === e.id).length })).filter(x => x.n).map(x => `<a class="item" href="#/exams/${x.e.id}"><span class="tile t-purple">${ic("exam")}</span><div style="flex:1"><div class="ttl">${esc(x.e.title)}</div><div class="meta">${x.n} attempt${x.n === 1 ? " needs" : "s need"} marking</div></div></a>`),
+      ...[...new Set(unread.map(m => m.student_id))].map(sid => { const p = people.find(x => x.id === sid); const n = unread.filter(m => m.student_id === sid).length; return `<a class="item" href="#/messages/${sid}">${avatar(p)}<div style="flex:1"><div class="ttl">${esc(displayName(p))}</div><div class="meta">${n} unread message${n === 1 ? "" : "s"}</div></div></a>`; })
+    ];
+    return paint(tok, `${hero}
+      <div class="stats">${stat(students.length, "Students", "people", "t-teal", "#/people")}${stat(toGrade.length + toReview.length, "To grade", "check", "t-amber", "#/assignments")}${stat(unread.length, "Unread messages", "chat", "t-blue", "#/messages")}${stat(upcoming.length, "Upcoming deadlines", "clock", "t-purple", "#/assignments")}</div>
+      <div class="row" style="margin-bottom:18px">
+        <a class="btn" href="#/announcements?new">${ic("megaphone")} Post announcement</a>
+        <a class="btn" href="#/materials">${ic("book")} Add material</a>
+        <a class="btn" href="#/assignments?new">${ic("clipboard")} New assignment</a>
+        <a class="btn" href="#/exams/new">${ic("exam")} New exam</a>
+      </div>
+      <div class="grid2">
+        <div class="card"><div class="card-head"><h2>Needs your attention</h2></div><div class="list">${attention.join("") || empty("check", "All caught up. Nothing to grade and no unread messages.")}</div></div>
+        <div class="card"><div class="card-head"><h2>Latest announcements</h2><span class="spacer"></span><a class="btn sm" href="#/announcements">View all</a></div><div class="list">${annHtml}</div></div>
+      </div>`);
+  }
+
+  const mySub = id => subs.find(s => s.assignment_id === id);
+  const todo = [
+    ...asg.filter(a => !mySub(a.id) && (!a.due_at || new Date(a.due_at) > Date.now())).map(a => ({ when: a.due_at, html: `<a class="item" href="#/assignments/${a.id}"><span class="tile t-teal">${ic("clipboard")}</span><div style="flex:1;min-width:0"><div class="ttl">${esc(a.title)}</div><div class="meta">${a.due_at ? "Due " + relTime(a.due_at) + " · " + fmtDate(a.due_at) : "No due date"}</div></div>${a.due_at && new Date(a.due_at) - Date.now() < 2 * 864e5 ? `<span class="chip warn">Due soon</span>` : ""}</a>` })),
+    ...exams.filter(e => examWindow(e) === "open" && !atts.some(x => x.exam_id === e.id && x.submitted_at)).map(e => ({ when: e.closes_at, html: `<a class="item" href="#/exams/${e.id}"><span class="tile t-purple">${ic("exam")}</span><div style="flex:1;min-width:0"><div class="ttl">${esc(e.title)}</div><div class="meta">${e.closes_at ? "Closes " + relTime(e.closes_at) : "Open now"}${e.time_limit_min ? " · " + e.time_limit_min + " min" : ""}</div></div><span class="chip accent">Open</span></a>` }))
+  ].sort((a, b) => String(a.when || "9").localeCompare(String(b.when || "9")));
+  const graded = subs.filter(s => s.grade !== null && s.grade !== undefined).sort((a, b) => String(b.graded_at).localeCompare(String(a.graded_at))).slice(0, 4);
+  const unread = msgs.filter(m => !m.read_at && m.sender_id !== S.me.id).length;
+  return paint(tok, `${hero}
+    ${unread ? `<a class="card pad row" href="#/messages" style="margin-bottom:18px;text-decoration:none;color:inherit"><span class="tile t-blue">${ic("chat")}</span><b>You have ${unread} new message${unread === 1 ? "" : "s"} from your instructor.</b><span class="spacer"></span><span class="btn sm">Open</span></a>` : ""}
+    <div class="grid2">
+      <div class="card"><div class="card-head"><h2>Coming up</h2></div><div class="list">${todo.map(x => x.html).join("") || empty("check", "Nothing due right now. Nice!")}</div></div>
+      <div class="card"><div class="card-head"><h2>Announcements</h2><span class="spacer"></span><a class="btn sm" href="#/announcements">View all</a></div><div class="list">${annHtml}</div></div>
+    </div>
+    <div class="card" style="margin-top:18px"><div class="card-head"><h2>Recent feedback</h2><span class="spacer"></span><a class="btn sm" href="#/grades">All grades</a></div><div class="list">
+      ${graded.map(s => { const a = asg.find(x => x.id === s.assignment_id); return a ? `<a class="item" href="#/assignments/${a.id}"><span class="tile t-ink">${ic("check")}</span><div style="flex:1;min-width:0"><div class="ttl">${esc(a.title)}</div><div class="meta">${esc((s.feedback || "No written feedback").slice(0, 110))}</div></div><span class="chip ok">${fmtNum(s.grade)} / ${fmtNum(a.points)}</span></a>` : ""; }).join("") || empty("chart", "Your grades and feedback will appear here.")}
+    </div></div>`);
+};
+
+/* ========================== announcements ========================== */
+ROUTES.announcements = async tok => {
+  const t = isT();
+  const list = (await store().list("announcements")).sort((a, b) => (b.pinned - a.pinned) || b.created_at.localeCompare(a.created_at));
+  const people = await store().list("profiles");
+  const seen = lastSeen();
+  const ok = paint(tok, head("Announcements", "News and updates from your instructor.", t ? `<button class="btn primary" id="newAnn">${ic("plus")} New announcement</button>` : "") +
+    (list.length ? list.map(a => `<article class="card" style="margin-bottom:14px">
+      <div class="card-head">${avatar(people.find(p => p.id === a.author_id))}<div style="flex:1;min-width:0"><h2 style="font-size:17px">${esc(a.title)}</h2><div class="meta small muted">${esc(displayName(people.find(p => p.id === a.author_id)))} · ${fmtDate(a.created_at)}</div></div>
+        ${a.pinned ? `<span class="chip warn">${ic("pin", 12)} Pinned</span>` : ""}${a.created_at > seen && a.author_id !== S.me.id ? `<span class="chip accent">New</span>` : ""}
+        ${t ? `<button class="btn sm ghost icon" data-edit="${a.id}" aria-label="Edit">${ic("edit")}</button><button class="btn sm ghost icon" data-del="${a.id}" aria-label="Delete">${ic("trash")}</button>` : ""}</div>
+      <div class="card-body md">${md(a.body)}</div></article>`).join("") : `<div class="card">${empty("megaphone", "No announcements yet.")}</div>`));
+  if (!ok) return;
+  markSeen();
+  const editor = a => modal({
+    title: a ? "Edit announcement" : "New announcement", ok: a ? "Save" : "Post",
+    body: `<div class="stack"><label class="field">Title<input type="text" name="title" required maxlength="140" value="${esc(a?.title || "")}" autofocus></label>
+      <label class="field">Message <span class="hint">Formatting: **bold**, *italic*, - lists, links.</span><textarea name="body" rows="7">${esc(a?.body || "")}</textarea></label>
+      <label class="check"><input type="checkbox" name="pinned" ${a?.pinned ? "checked" : ""}> Pin to the top</label></div>`,
+    onOk: async f => {
+      if (!fval(f, "title")) { toast("Add a title.", true); return false; }
+      await store().save("announcements", { id: a?.id, title: fval(f, "title"), body: f.elements.body.value, pinned: f.elements.pinned.checked });
+      toast(a ? "Announcement updated" : "Announcement posted"); render();
+    }
+  });
+  if (t) {
+    $("#newAnn").onclick = () => editor(null);
+    $$("[data-edit]").forEach(b => b.onclick = () => editor(list.find(x => x.id === b.dataset.edit)));
+    $$("[data-del]").forEach(b => b.onclick = async () => { if (await confirmBox("Delete announcement?", "Students will no longer see it.")) { await store().remove("announcements", b.dataset.del); toast("Deleted"); render(); } });
+    if (location.hash.includes("?new")) { history.replaceState(null, "", "#/announcements"); editor(null); }
+  }
+};
+
+/* ============================ materials ============================ */
+ROUTES.materials = async tok => {
+  const t = isT(), st = store();
+  const [mods, mats] = await Promise.all([st.list("modules"), st.list("materials")]);
+  mods.sort(byPos);
+  const kindTile = { note: ["t-teal", "note"], link: ["t-blue", "link"], file: ["t-amber", "file"] };
+  const item = (m, i, arr) => {
+    const [cls, icon] = kindTile[m.kind] || kindTile.note;
+    const tools = t ? `<div class="tools"><button class="btn sm ghost icon" data-mv="${m.id}" data-dir="-1" ${i === 0 ? "disabled" : ""} aria-label="Move up">${ic("up")}</button><button class="btn sm ghost icon" data-mv="${m.id}" data-dir="1" ${i === arr.length - 1 ? "disabled" : ""} aria-label="Move down">${ic("down")}</button><button class="btn sm ghost icon" data-edit-mat="${m.id}" aria-label="Edit">${ic("edit")}</button><button class="btn sm ghost icon" data-del-mat="${m.id}" aria-label="Delete">${ic("trash")}</button></div>` : "";
+    let main;
+    if (m.kind === "note") main = `<details ${arr.length === 1 ? "open" : ""}><summary>${esc(m.title)}</summary><div class="md">${md(m.body)}</div></details>`;
+    else if (m.kind === "link") main = `<a href="${esc(/^https?:\/\//i.test(m.url || "") ? m.url : "#")}" target="_blank" rel="noopener" style="font-weight:600">${esc(m.title)}</a>${m.body ? `<div class="small muted">${esc(m.body)}</div>` : ""}`;
+    else main = `<button class="btn sm" data-file="${esc(m.file_path || "")}" data-name="${esc(m.file_name || "")}">${ic("download")} ${esc(m.title)}</button><div class="small muted" style="margin-top:4px">${esc(m.file_name || "")}${m.body ? " · " + esc(m.body) : ""}</div>`;
+    return `<div class="mat"><span class="tile ${cls}">${ic(icon)}</span><div style="flex:1;min-width:0">${main}</div>${tools}</div>`;
+  };
+  const ok = paint(tok, head("Materials", "Notes, links and files, organised by week.", t ? `<button class="btn primary" id="addMod">${ic("plus")} Add module</button>` : "") +
+    (mods.length ? mods.map((mo, i) => { const items = mats.filter(m => m.module_id === mo.id).sort(byPos); return `<section class="card module">
+      <div class="card-head"><span class="tile t-ink" style="width:30px;height:30px;border-radius:8px">${ic("book", 15)}</span><h3>${esc(mo.title)}</h3>
+        ${t ? `<div class="tools"><button class="btn sm ghost icon" data-mvmod="${mo.id}" data-dir="-1" ${i === 0 ? "disabled" : ""} aria-label="Move module up">${ic("up")}</button><button class="btn sm ghost icon" data-mvmod="${mo.id}" data-dir="1" ${i === mods.length - 1 ? "disabled" : ""} aria-label="Move module down">${ic("down")}</button><button class="btn sm ghost icon" data-edit-mod="${mo.id}" aria-label="Rename module">${ic("edit")}</button><button class="btn sm ghost icon" data-del-mod="${mo.id}" aria-label="Delete module">${ic("trash")}</button></div><button class="btn sm" data-add-mat="${mo.id}">${ic("plus")} Add item</button>` : ""}</div>
+      <div>${items.map(item).join("") || `<div class="mat muted small">Nothing here yet.</div>`}</div></section>`; }).join("")
+      : `<div class="card">${empty("book", t ? "Start by adding a module, such as “Week 1”." : "Your instructor hasn't added materials yet.")}</div>`));
+  if (!ok) return;
+  $$("[data-file]").forEach(b => b.onclick = () => openFile("materials", b.dataset.file, b.dataset.name));
+  if (!t) return;
+
+  const modEditor = mo => modal({
+    title: mo ? "Rename module" : "Add module",
+    body: `<label class="field">Module name<input type="text" name="title" required maxlength="120" placeholder="Week 4 · Grouping" value="${esc(mo?.title || "")}" autofocus></label>`,
+    onOk: async f => {
+      if (!fval(f, "title")) { toast("Give the module a name.", true); return false; }
+      await st.save("modules", { id: mo?.id, title: fval(f, "title"), position: mo ? mo.position : Math.max(0, ...mods.map(m => m.position || 0)) + 1 });
+      render();
+    }
+  });
+  const matEditor = (moduleId, m) => modal({
+    title: m ? "Edit item" : "Add item",
+    body: `<div class="stack">
+      <label class="field">Type<select name="kind" ${m ? "disabled" : ""}><option value="note">Note (text you write here)</option><option value="link">Link to a website or video</option><option value="file">File (PDF, slides, data…)</option></select></label>
+      <label class="field">Title<input type="text" name="title" required maxlength="140" value="${esc(m?.title || "")}" autofocus></label>
+      <label class="field k-link">Web address<input type="text" name="url" placeholder="https://…" value="${esc(m?.url || "")}"></label>
+      <label class="field k-file">File ${m?.file_name ? `<span class="hint">Current: ${esc(m.file_name)}. Choose a new file to replace it.</span>` : ""}<input type="file" name="file"></label>
+      <label class="field"><span class="k-note">Text <span class="hint">Formatting: **bold**, *italic*, - lists, \`code\`, \`\`\` code blocks \`\`\`</span></span><span class="k-other">Short description (optional)</span><textarea name="body" rows="8">${esc(m?.body || "")}</textarea></label></div>`,
+    wide: true,
+    onMount: f => {
+      const sel = f.elements.kind; if (m) sel.value = m.kind;
+      const sync = () => { const k = sel.value; $$(".k-link", f).forEach(e => e.classList.toggle("hidden", k !== "link")); $$(".k-file", f).forEach(e => e.classList.toggle("hidden", k !== "file")); $$(".k-note", f).forEach(e => e.classList.toggle("hidden", k !== "note")); $$(".k-other", f).forEach(e => e.classList.toggle("hidden", k === "note")); f.elements.body.rows = k === "note" ? 10 : 3; };
+      sel.onchange = sync; sync();
+    },
+    onOk: async f => {
+      const kind = m ? m.kind : f.elements.kind.value, title = fval(f, "title"), url = fval(f, "url"), file = f.elements.file.files[0];
+      if (!title) { toast("Add a title.", true); return false; }
+      if (kind === "link" && !/^https?:\/\/\S+$/i.test(url)) { toast("Enter a full web address starting with https://", true); return false; }
+      if (kind === "file" && !file && !m?.file_path) { toast("Choose a file to upload.", true); return false; }
+      const row = { id: m?.id, module_id: moduleId, kind, title, body: f.elements.body.value, url: kind === "link" ? url : null };
+      if (file) { const path = `${moduleId}/${Date.now()}-${safeFile(file.name)}`; await st.upload("materials", path, file); row.file_path = path; row.file_name = file.name; }
+      if (!m) row.position = Math.max(0, ...mats.filter(x => x.module_id === moduleId).map(x => x.position || 0)) + 1;
+      await st.save("materials", row);
+      toast(m ? "Item updated" : "Item added"); render();
+    }
+  });
+  const swap = async (table, arr, id, dir) => {
+    const i = arr.findIndex(x => x.id === id), j = i + dir; if (j < 0 || j >= arr.length) return;
+    const next = arr.slice(); [next[i], next[j]] = [next[j], next[i]];
+    for (const [k, x] of next.entries()) if (x.position !== k + 1) await st.save(table, { id: x.id, position: k + 1 });
+    render();
+  };
+  $("#addMod").onclick = () => modEditor(null);
+  $$("[data-edit-mod]").forEach(b => b.onclick = () => modEditor(mods.find(m => m.id === b.dataset.editMod)));
+  $$("[data-del-mod]").forEach(b => b.onclick = async () => { const n = mats.filter(m => m.module_id === b.dataset.delMod).length; if (await confirmBox("Delete module?", `This also deletes the ${n} item${n === 1 ? "" : "s"} inside it.`)) { await st.remove("modules", b.dataset.delMod); toast("Module deleted"); render(); } });
+  $$("[data-mvmod]").forEach(b => b.onclick = () => swap("modules", mods, b.dataset.mvmod, +b.dataset.dir));
+  $$("[data-add-mat]").forEach(b => b.onclick = () => matEditor(b.dataset.addMat, null));
+  $$("[data-edit-mat]").forEach(b => b.onclick = () => { const m = mats.find(x => x.id === b.dataset.editMat); matEditor(m.module_id, m); });
+  $$("[data-del-mat]").forEach(b => b.onclick = async () => { if (await confirmBox("Delete item?", "Students will no longer see it.")) { await st.remove("materials", b.dataset.delMat); toast("Item deleted"); render(); } });
+  $$("[data-mv]").forEach(b => b.onclick = () => { const m = mats.find(x => x.id === b.dataset.mv); swap("materials", mats.filter(x => x.module_id === m.module_id).sort(byPos), m.id, +b.dataset.dir); });
+};
+
+/* ============================ assignments ============================ */
+function subStatus(a, s) {
+  if (s && s.grade !== null && s.grade !== undefined) return `<span class="chip ok">${ic("check", 12)} ${fmtNum(s.grade)} / ${fmtNum(a.points)}</span>`;
+  if (s) return `<span class="chip info">Submitted${a.due_at && s.submitted_at > a.due_at ? " late" : ""}</span>`;
+  if (a.due_at && new Date(a.due_at) < Date.now()) return `<span class="chip err">Missing</span>`;
+  return `<span class="chip">Not submitted</span>`;
+}
+function assignmentEditor(a) {
+  return modal({
+    title: a ? "Edit assignment" : "New assignment", ok: a ? "Save" : "Create", wide: true,
+    body: `<div class="stack">
+      <label class="field">Title<input type="text" name="title" required maxlength="140" value="${esc(a?.title || "")}" autofocus></label>
+      <label class="field">Instructions <span class="hint">Formatting: **bold**, *italic*, - and 1. lists, \`code\`, links.</span><textarea name="instructions" rows="9">${esc(a?.instructions || "")}</textarea></label>
+      <div class="grid3"><label class="field">Due<input type="datetime-local" name="due" value="${toLocalInput(a?.due_at)}"></label>
+        <label class="field">Points<input type="number" name="points" min="0" step="any" value="${esc(a?.points ?? 100)}"></label>
+        <div class="field">Students can submit<label class="check"><input type="checkbox" name="text" ${a?.allow_text ?? true ? "checked" : ""}> Text</label><label class="check"><input type="checkbox" name="file" ${a?.allow_file ?? true ? "checked" : ""}> A file</label></div></div>
+      <label class="check"><input type="checkbox" name="published" ${a?.published ? "checked" : ""}> Published (students can see it)</label></div>`,
+    onOk: async f => {
+      if (!fval(f, "title")) { toast("Add a title.", true); return false; }
+      if (!f.elements.text.checked && !f.elements.file.checked) { toast("Allow text, a file, or both.", true); return false; }
+      const row = await store().save("assignments", { id: a?.id, title: fval(f, "title"), instructions: f.elements.instructions.value, due_at: fromLocalInput(f.elements.due.value), points: num(f.elements.points.value) ?? 0, allow_text: f.elements.text.checked, allow_file: f.elements.file.checked, published: f.elements.published.checked });
+      toast(a ? "Assignment saved" : "Assignment created");
+      if (!a) location.hash = "#/assignments/" + row.id; else render();
+    }
+  });
+}
+ROUTES.assignments = async (tok, id) => {
+  if (id) return assignmentDetail(tok, id);
+  const t = isT(), st = store();
+  const [asg, subs, people] = await Promise.all([st.list("assignments"), st.list("submissions"), t ? st.list("profiles") : []]);
+  asg.sort((a, b) => String(a.due_at || "9").localeCompare(String(b.due_at || "9")));
+  const nStudents = people.filter(p => p.role === "student").length;
+  const ok = paint(tok, head("Assignments", t ? "Create work, collect submissions and grade them." : "Your work for this course.", t ? `<button class="btn primary" id="newAsg">${ic("plus")} New assignment</button>` : "") +
+    `<div class="card"><div class="list">${asg.map(a => {
+      const mine = subs.filter(s => s.assignment_id === a.id);
+      const right = t ? `${a.published ? "" : `<span class="chip">Draft</span>`}<span class="chip info">${mine.length}/${nStudents} submitted</span>${mine.filter(s => s.grade === null || s.grade === undefined).length ? `<span class="chip warn">${mine.filter(s => s.grade === null || s.grade === undefined).length} to grade</span>` : ""}` : subStatus(a, mine[0]);
+      return `<a class="item" href="#/assignments/${a.id}"><span class="tile t-teal">${ic("clipboard")}</span><div style="flex:1;min-width:0"><div class="ttl">${esc(a.title)}</div><div class="meta">${a.due_at ? (new Date(a.due_at) < Date.now() ? "Was due " : "Due ") + fmtDate(a.due_at) + " · " + relTime(a.due_at) : "No due date"} · ${fmtNum(a.points)} pts</div></div><div class="row" style="justify-content:flex-end">${right}</div></a>`;
+    }).join("") || empty("clipboard", t ? "No assignments yet." : "No assignments have been posted yet.")}</div></div>`);
+  if (ok && t) { $("#newAsg").onclick = () => assignmentEditor(null); if (location.hash.includes("?new")) { history.replaceState(null, "", "#/assignments"); assignmentEditor(null); } }
+};
+async function assignmentDetail(tok, id) {
+  const t = isT(), st = store();
+  const [a] = await st.list("assignments", { eq: { id } });
+  if (!a) return paint(tok, `<div class="card">${empty("clipboard", "This assignment doesn't exist or isn't published yet.", `<p><a class="btn" href="#/assignments">Back to assignments</a></p>`)}</div>`);
+  const subs = await st.list("submissions", { eq: { assignment_id: id } });
+  const crumb = `<a href="#/assignments">Assignments</a> /`;
+  const info = `<div class="row small muted" style="margin-top:4px">${a.due_at ? `${ic("clock", 14)} Due ${fmtDate(a.due_at)} (${relTime(a.due_at)})` : "No due date"} · ${fmtNum(a.points)} points ${t && !a.published ? `<span class="chip">Draft: students can't see this</span>` : ""}</div>`;
+  const instructions = `<div class="card" style="margin-bottom:18px"><div class="card-head"><h2>Instructions</h2></div><div class="card-body md">${md(a.instructions) || '<p class="muted">No instructions.</p>'}</div></div>`;
+
+  if (!t) {
+    const s = subs[0], graded = s && s.grade !== null && s.grade !== undefined;
+    const ok = paint(tok, head(esc(a.title), info, subStatus(a, s), crumb) + instructions + `
+      ${graded ? `<div class="card pad" style="margin-bottom:18px;border-color:var(--ok)"><div class="row"><span class="tile t-teal">${ic("check")}</span><div><div class="muted small">Your grade</div><b style="font-size:24px">${fmtNum(s.grade)} / ${fmtNum(a.points)}</b></div></div>${s.feedback ? `<div style="margin-top:12px"><div class="muted small" style="font-weight:600">Feedback</div><div class="md">${md(s.feedback)}</div></div>` : ""}</div>` : ""}
+      <div class="card"><div class="card-head"><h2>${graded ? "What you submitted" : s ? "Your submission" : "Submit your work"}</h2><span class="spacer"></span>${s ? `<span class="small muted">Submitted ${fmtDate(s.submitted_at)}${a.due_at && s.submitted_at > a.due_at ? ' · <span style="color:var(--err)">late</span>' : ""}</span>` : ""}</div>
+        <form class="card-body stack" id="subForm">
+          ${graded ? `${s.body ? `<div class="answer-box mono">${esc(s.body)}</div>` : ""}${s.file_path ? `<div><button type="button" class="btn sm" id="myFile">${ic("download")} ${esc(s.file_name || "Your file")}</button></div>` : ""}`
+            : `${a.allow_text ? `<label class="field">Your answer<textarea name="body" rows="9" placeholder="Type or paste your work here">${esc(s?.body || "")}</textarea></label>` : ""}
+               ${a.allow_file ? `<label class="field">${s?.file_path ? `Upload a new file <span class="hint">You already uploaded ${esc(s.file_name)}. Choosing a file replaces it.</span>` : "Attach a file"}<input type="file" name="file"></label>${s?.file_path ? `<div><button type="button" class="btn sm" id="myFile">${ic("download")} ${esc(s.file_name)}</button></div>` : ""}` : ""}
+               <div class="row"><button class="btn primary" type="submit">${ic("upload")} ${s ? "Resubmit" : "Submit"}</button><span class="small muted">${s ? "You can resubmit until your work is graded." : a.due_at && new Date(a.due_at) < Date.now() ? "The due date has passed; your work will be marked late." : ""}</span></div>`}
+        </form></div>`);
+    if (!ok) return;
+    $("#myFile")?.addEventListener("click", () => openFile("submissions", s.file_path, s.file_name));
+    const form = $("#subForm");
+    form.onsubmit = async e => {
+      e.preventDefault();
+      const body = form.elements.body?.value ?? "", file = form.elements.file?.files[0];
+      if (!body.trim() && !file && !s?.file_path) { toast("Write an answer or attach a file first.", true); return; }
+      const btn = $("button[type=submit]", form); btn.disabled = true; btn.innerHTML = `<span class="spin" style="width:16px;height:16px;border-width:2px"></span> Submitting…`;
+      try {
+        const row = { id: s?.id, assignment_id: a.id, body };
+        if (file) { const path = `${S.me.id}/${a.id}/${Date.now()}-${safeFile(file.name)}`; await st.upload("submissions", path, file); row.file_path = path; row.file_name = file.name; }
+        await st.save("submissions", row);
+        toast(s ? "Resubmitted. Your instructor will see the new version." : "Submitted! Your instructor can now see your work.");
+        render();
+      } catch (err) { toast(errMsg(err), true); btn.disabled = false; btn.innerHTML = `${ic("upload")} ${s ? "Resubmit" : "Submit"}`; }
+    };
+    return;
+  }
+
+  const people = (await st.list("profiles")).filter(p => p.role === "student").sort((x, y) => displayName(x).localeCompare(displayName(y)));
+  const rows = people.map(p => ({ p, s: subs.find(x => x.student_id === p.id) }));
+  const nSub = subs.length, nGraded = subs.filter(s => s.grade !== null && s.grade !== undefined).length;
+  const ok = paint(tok, head(esc(a.title), info, `<button class="btn" id="pub">${ic(a.published ? "eye" : "send")} ${a.published ? "Unpublish" : "Publish"}</button><button class="btn" id="edit">${ic("edit")} Edit</button><button class="btn danger" id="del">${ic("trash")} Delete</button>`, crumb) + instructions + `
+    <div class="card"><div class="card-head"><h2>Submissions</h2><span class="chip info">${nSub}/${people.length} submitted</span><span class="chip ok">${nGraded} graded</span><span class="spacer"></span><button class="btn sm" id="csv">${ic("download")} Export grades</button></div>
+    <div class="table-wrap"><table class="t"><thead><tr><th>Student</th><th>Status</th><th>Work</th><th>Grade / ${fmtNum(a.points)}</th><th>Feedback</th><th></th></tr></thead><tbody>
+    ${rows.map(({ p, s }) => `<tr data-sid="${s?.id || ""}">
+      <td><div class="row" style="flex-wrap:nowrap">${avatar(p)}<div><b>${esc(displayName(p))}</b><div class="tiny muted">${esc(p.email)}</div></div></div></td>
+      <td>${subStatus(a, s)}${s ? `<div class="tiny muted" style="margin-top:4px">${fmtDate(s.submitted_at)}</div>` : ""}</td>
+      <td>${s ? `<button class="btn sm" data-view="${s.id}">${ic("eye")} View</button>` : `<span class="muted">–</span>`}</td>
+      <td>${s ? `<input type="number" step="any" min="0" name="grade" value="${s.grade ?? ""}" aria-label="Grade for ${esc(displayName(p))}">` : ""}</td>
+      <td>${s ? `<input type="text" name="feedback" value="${esc(s.feedback || "")}" placeholder="Optional" aria-label="Feedback for ${esc(displayName(p))}">` : ""}</td>
+      <td>${s ? `<button class="btn sm primary" data-grade="${s.id}">Save</button>` : `<a class="btn sm ghost" href="#/messages/${p.id}" title="Send a reminder">${ic("chat")}</a>`}</td></tr>`).join("") || `<tr><td colspan="6">${empty("people", "No students have joined yet.")}</td></tr>`}
+    </tbody></table></div></div>`);
+  if (!ok) return;
+  $("#edit").onclick = () => assignmentEditor(a);
+  $("#pub").onclick = async () => { await st.save("assignments", { id: a.id, published: !a.published }); toast(a.published ? "Hidden from students" : "Published. Students can see it now."); render(); };
+  $("#del").onclick = async () => { if (await confirmBox("Delete assignment?", `This also deletes ${nSub} submission${nSub === 1 ? "" : "s"} and their grades.`)) { await st.remove("assignments", a.id); toast("Assignment deleted"); location.hash = "#/assignments"; } };
+  $("#csv").onclick = () => saveBlob(new Blob([csv([["Student", "Email", "Submitted", "Late", "Grade", "Out of", "Feedback"], ...rows.map(({ p, s }) => [displayName(p), p.email, s ? fmtDate(s.submitted_at) : "", s && a.due_at && s.submitted_at > a.due_at ? "yes" : "", s?.grade ?? "", a.points, s?.feedback || ""])])], { type: "text/csv" }), safeFile(a.title) + "-grades.csv");
+  $$("[data-view]").forEach(b => b.onclick = () => {
+    const s = subs.find(x => x.id === b.dataset.view), p = people.find(x => x.id === s.student_id);
+    modal({ title: displayName(p) + " · " + a.title, ok: "", cancel: "Close", wide: true,
+      body: `<p class="small muted">Submitted ${fmtDate(s.submitted_at)}${a.due_at && s.submitted_at > a.due_at ? " · late" : ""}</p>${s.body ? `<div class="answer-box mono" style="max-height:50vh;overflow:auto">${esc(s.body)}</div>` : `<p class="muted">No text.</p>`}${s.file_path ? `<p style="margin-top:12px"><button type="button" class="btn" id="subFile">${ic("download")} ${esc(s.file_name || "File")}</button></p>` : ""}`,
+      onMount: f => { $("#subFile", f)?.addEventListener("click", () => openFile("submissions", s.file_path, s.file_name)); } });
+  });
+  $$("[data-grade]").forEach(b => b.onclick = async () => {
+    const tr = b.closest("tr"), g = num(tr.querySelector("[name=grade]").value);
+    if (g !== null && (isNaN(g) || g < 0)) { toast("Enter a grade of 0 or more.", true); return; }
+    b.disabled = true;
+    try {
+      const saved = await st.save("submissions", { id: b.dataset.grade, grade: g, feedback: tr.querySelector("[name=feedback]").value.trim() || null });
+      tr.children[1].innerHTML = subStatus(a, saved) + `<div class="tiny muted" style="margin-top:4px">${fmtDate(saved.submitted_at)}</div>`;
+      toast("Grade saved"); refreshBadges(); b.textContent = "Saved"; setTimeout(() => { if (b.isConnected) { b.textContent = "Save"; b.disabled = false; } }, 1200); }
+    catch (e) { toast(errMsg(e), true); b.disabled = false; }
+  });
+}
+
+/* =============================== exams =============================== */
+const QKIND = { mc: "Multiple choice", tf: "True / False", short: "Short answer", essay: "Essay" };
+function examWhen(e) {
+  const w = examWindow(e);
+  if (w === "upcoming") return `Opens ${fmtDate(e.opens_at)}`;
+  if (w === "closed") return `Closed ${fmtDate(e.closes_at)}`;
+  return e.closes_at ? `Open until ${fmtDate(e.closes_at)}` : "Open";
+}
+ROUTES.exams = async (tok, id, sub) => {
+  if (id === "new") return examEditor(tok, null);
+  if (id && sub === "edit") return examEditor(tok, id);
+  if (id && sub === "take") return examTake(tok, id);
+  if (id) return examDetail(tok, id);
+  const t = isT(), st = store();
+  const [exams, atts, res, people] = await Promise.all([st.list("exams"), st.list("exam_attempts"), st.list("exam_results"), t ? st.list("profiles") : []]);
+  exams.sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)));
+  const ok = paint(tok, head("Exams", t ? "Build quizzes and exams; multiple choice and true/false are marked automatically." : "Timed quizzes and exams.", t ? `<a class="btn primary" href="#/exams/new">${ic("plus")} New exam</a>` : "") +
+    `<div class="card"><div class="list">${exams.map(e => {
+      const w = examWindow(e), mine = atts.find(x => x.exam_id === e.id);
+      let right;
+      if (t) { const n = atts.filter(x => x.exam_id === e.id && x.submitted_at).length, r = res.filter(x => x.exam_id === e.id && x.needs_review).length; right = `${e.published ? "" : `<span class="chip">Draft</span>`}<span class="chip info">${n} submitted</span>${r ? `<span class="chip warn">${r} to mark</span>` : ""}`; }
+      else if (mine?.submitted_at) { const r = res.find(x => x.exam_id === e.id); right = r ? `<span class="chip ok">${fmtNum(r.total)} / ${fmtNum(r.max_score)}${r.needs_review && !r.released ? " so far" : ""}</span>` : `<span class="chip info">Submitted</span>`; }
+      else if (mine) right = `<span class="chip warn">In progress</span>`;
+      else right = w === "open" ? `<span class="chip accent">Open</span>` : w === "upcoming" ? `<span class="chip">Upcoming</span>` : `<span class="chip err">Missed</span>`;
+      return `<a class="item" href="#/exams/${e.id}"><span class="tile t-purple">${ic("exam")}</span><div style="flex:1;min-width:0"><div class="ttl">${esc(e.title)}</div><div class="meta">${examWhen(e)}${e.time_limit_min ? ` · ${e.time_limit_min} min` : " · untimed"}</div></div><div class="row" style="justify-content:flex-end">${right}</div></a>`;
+    }).join("") || empty("exam", t ? "No exams yet." : "No exams have been posted yet.")}</div></div>`);
+};
+
+async function examDetail(tok, id) {
+  const t = isT(), st = store();
+  const [e] = await st.list("exams", { eq: { id } });
+  if (!e) return paint(tok, `<div class="card">${empty("exam", "This exam doesn't exist or isn't published yet.", `<p><a class="btn" href="#/exams">Back to exams</a></p>`)}</div>`);
+  const crumb = `<a href="#/exams">Exams</a> /`;
+  const facts = `<div class="row small muted" style="margin-top:4px">${ic("clock", 14)} ${e.time_limit_min ? e.time_limit_min + " minutes" : "No time limit"} · ${examWhen(e)} · one attempt ${t && !e.published ? `<span class="chip">Draft</span>` : ""}</div>`;
+  const instr = e.instructions ? `<div class="card" style="margin-bottom:18px"><div class="card-body md">${md(e.instructions)}</div></div>` : "";
+
+  if (!t) {
+    const [att] = await st.list("exam_attempts", { eq: { exam_id: id } });
+    const w = examWindow(e);
+    let body;
+    if (att?.submitted_at) {
+      const [r] = await st.list("exam_results", { eq: { exam_id: id } });
+      body = r ? `<div class="card pad" style="border-color:var(--ok)"><div class="row"><span class="tile t-teal">${ic("check")}</span><div><div class="muted small">${r.released || !r.needs_review ? "Your score" : "Your score so far"}</div><b style="font-size:26px">${fmtNum(r.total)} / ${fmtNum(r.max_score)}</b></div></div>
+          ${r.needs_review && !r.released ? `<p class="muted" style="margin-top:12px">Some answers are marked by your instructor. Your final score will appear here once they're marked.</p>` : ""}
+          <p class="small muted" style="margin:10px 0 0">Submitted ${fmtDate(att.submitted_at)}${att.late ? " · after the time limit" : ""}</p></div>`
+        : `<div class="card pad"><div class="row"><span class="tile t-blue">${ic("check")}</span><div><b>Submitted ${fmtDate(att.submitted_at)}</b><div class="muted">Your instructor will release results later.</div></div></div></div>`;
+    } else if (att) body = `<div class="card pad row"><span class="tile t-amber">${ic("clock")}</span><div style="flex:1"><b>You've started this exam.</b><div class="muted">The timer keeps running, so finish as soon as you can.</div></div><a class="btn primary" href="#/exams/${id}/take">${ic("play")} Continue</a></div>`;
+    else if (w === "open") body = `<div class="card pad row"><span class="tile t-purple">${ic("exam")}</span><div style="flex:1"><b>Ready when you are.</b><div class="muted">${e.time_limit_min ? `Once you press Start you'll have <b>${e.time_limit_min} minutes</b>. You can't pause.` : "There's no time limit."} You get one attempt.</div></div><button class="btn primary" id="start">${ic("play")} Start exam</button></div>`;
+    else body = `<div class="card pad">${w === "upcoming" ? `This exam opens ${fmtDate(e.opens_at)}.` : "This exam has closed."}</div>`;
+    const ok = paint(tok, head(esc(e.title), facts, "", crumb) + instr + body);
+    if (ok) $("#start")?.addEventListener("click", async () => {
+      if (!(await modal({ title: "Start the exam?", body: `<p>${e.time_limit_min ? `The ${e.time_limit_min}-minute timer starts now and keeps running even if you close the page.` : "There's no time limit."} You can only take it once.</p>`, ok: "Start now" }))) return;
+      try { await st.startExam(id); location.hash = `#/exams/${id}/take`; } catch (err) { toast(errMsg(err), true); }
+    });
+    return;
+  }
+
+  const [qs, atts, res, people, keys] = await Promise.all([st.list("exam_questions", { eq: { exam_id: id } }), st.list("exam_attempts", { eq: { exam_id: id } }), st.list("exam_results", { eq: { exam_id: id } }), st.list("profiles"), st.list("exam_keys")]);
+  qs.sort(byPos);
+  const students = people.filter(p => p.role === "student").sort((x, y) => displayName(x).localeCompare(displayName(y)));
+  const maxPts = qs.reduce((s, q) => s + (Number(q.points) || 0), 0);
+  const ok = paint(tok, head(esc(e.title), facts, `<button class="btn" id="pub">${ic(e.published ? "eye" : "send")} ${e.published ? "Unpublish" : "Publish"}</button><a class="btn" href="#/exams/${id}/edit">${ic("edit")} Edit questions</a><button class="btn danger" id="del">${ic("trash")} Delete</button>`, crumb) + instr + `
+    <div class="card"><div class="card-head"><h2>Results</h2><span class="chip info">${atts.filter(a => a.submitted_at).length}/${students.length} submitted</span><span class="chip">${qs.length} questions · ${fmtNum(maxPts)} pts</span><span class="spacer"></span>
+      <button class="btn sm" id="releaseAll">${ic("send")} Release all marked results</button><button class="btn sm" id="csv">${ic("download")} Export</button></div>
+    <div class="table-wrap"><table class="t"><thead><tr><th>Student</th><th>Started</th><th>Submitted</th><th class="num">Score</th><th>Status</th><th></th></tr></thead><tbody>
+    ${students.map(p => { const at = atts.find(a => a.student_id === p.id), r = at && res.find(x => x.attempt_id === at.id);
+      return `<tr><td><div class="row" style="flex-wrap:nowrap">${avatar(p)}<b>${esc(displayName(p))}</b></div></td>
+        <td class="small">${at ? fmtDate(at.started_at) : `<span class="muted">Not started</span>`}</td>
+        <td class="small">${at?.submitted_at ? fmtDate(at.submitted_at) + (at.late ? ` <span class="chip err">late</span>` : "") : at ? `<span class="chip warn">In progress</span>` : ""}</td>
+        <td class="num">${r ? `<b>${fmtNum(r.total)}</b> / ${fmtNum(r.max_score)}` : "–"}</td>
+        <td>${r ? (r.needs_review ? `<span class="chip warn">Needs marking</span>` : r.released ? `<span class="chip ok">Released</span>` : `<span class="chip">${e.show_results ? "Shown to student" : "Not released"}</span>`) : ""}</td>
+        <td>${r ? `<button class="btn sm" data-review="${at.id}">${ic("check")} Review</button>` : ""}</td></tr>`; }).join("") || `<tr><td colspan="6">${empty("people", "No students yet.")}</td></tr>`}
+    </tbody></table></div></div>`);
+  if (!ok) return;
+  $("#pub").onclick = async () => {
+    if (!e.published && !qs.length) { toast("Add at least one question first.", true); return; }
+    await st.save("exams", { id, published: !e.published }); toast(e.published ? "Hidden from students" : "Published"); render();
+  };
+  $("#del").onclick = async () => { if (await confirmBox("Delete exam?", "This deletes its questions and every student's attempt and score.")) { await st.remove("exams", id); toast("Exam deleted"); location.hash = "#/exams"; } };
+  $("#releaseAll").onclick = async () => {
+    const ready = res.filter(r => !r.needs_review && !r.released);
+    if (!ready.length) { toast(res.some(r => r.needs_review) ? "Mark the remaining attempts first." : "Nothing new to release."); return; }
+    for (const r of ready) await st.save("exam_results", { attempt_id: r.attempt_id, released: true }, "attempt_id");
+    toast(`Released ${ready.length} result${ready.length === 1 ? "" : "s"}`); render();
+  };
+  $("#csv").onclick = () => saveBlob(new Blob([csv([["Student", "Email", "Started", "Submitted", "Late", "Score", "Out of", "Needs marking", "Released"], ...students.map(p => { const at = atts.find(a => a.student_id === p.id), r = at && res.find(x => x.attempt_id === at.id); return [displayName(p), p.email, at ? fmtDate(at.started_at) : "", at?.submitted_at ? fmtDate(at.submitted_at) : "", at?.late ? "yes" : "", r?.total ?? "", r?.max_score ?? maxPts, r?.needs_review ? "yes" : "", r?.released ? "yes" : ""]; })])], { type: "text/csv" }), safeFile(e.title) + "-results.csv");
+  const keyOf = Object.fromEntries(keys.map(k => [k.question_id, k.answer]));
+  $$("[data-review]").forEach(b => b.onclick = () => {
+    const at = atts.find(a => a.id === b.dataset.review), r = res.find(x => x.attempt_id === at.id), p = people.find(x => x.id === at.student_id);
+    const g = gradeExam(qs, keyOf, at.answers || {});
+    const shown = (q, v) => v === undefined || v === null || v === "" ? `<span class="muted">No answer</span>` : q.kind === "mc" ? esc(q.options?.[v] ?? v) : q.kind === "tf" ? (String(v) === "true" ? "True" : "False") : esc(v);
+    const correct = q => { const k = keyOf[q.id]; if (k === undefined || k === null) return ""; if (q.kind === "mc") return esc(q.options?.[k] ?? k); if (q.kind === "tf") return String(k) === "true" ? "True" : "False"; if (Array.isArray(k) && k.length) return k.map(esc).join(" / "); return ""; };
+    modal({
+      title: "Review · " + displayName(p), wide: true, ok: "Save marks",
+      body: qs.map((q, i) => { const pq = g.per[q.id], manual = r.manual?.[q.id], c = correct(q);
+        return `<div class="q" style="padding:14px 0"><div class="qn">Question ${i + 1} · ${QKIND[q.kind]} · ${fmtNum(q.points)} pt${q.points == 1 ? "" : "s"}</div><div class="prompt md">${md(q.prompt)}</div>
+          <div class="answer-box">${shown(q, at.answers?.[q.id])}</div>${c ? `<div class="small muted" style="margin-top:6px">Correct answer: <b>${c}</b></div>` : ""}
+          <div class="row" style="margin-top:8px"><span class="mark ${pq.state === "right" ? "ok" : pq.state === "review" ? "pend" : "bad"}">${pq.state === "right" ? "✓ Correct" : pq.state === "review" ? "Mark by hand" : "✗ Incorrect"}</span><span class="spacer"></span>
+          <label class="row small" style="gap:6px">Points <input type="number" step="any" min="0" max="${q.points}" style="width:90px" name="m_${q.id}" value="${manual ?? (pq.state === "review" ? "" : pq.got)}" placeholder="0–${fmtNum(q.points)}"> / ${fmtNum(q.points)}</label></div></div>`; }).join("") +
+        `<label class="check" style="margin-top:8px"><input type="checkbox" name="release" ${r.released || e.show_results ? "checked" : ""}> Show this score to the student</label>`,
+      onOk: async f => {
+        const manual = {}; let total = 0, missing = 0;
+        for (const q of qs) {
+          const v = num(f.elements["m_" + q.id].value), auto = g.per[q.id];
+          if (v === null) { if (auto.state === "review") missing++; total += auto.got; continue; }
+          if (v < 0 || v > Number(q.points)) { toast(`Question ${qs.indexOf(q) + 1}: points must be between 0 and ${q.points}.`, true); return false; }
+          if (v !== auto.got || auto.state === "review") manual[q.id] = v;
+          total += v;
+        }
+        if (missing && !(await confirmBox("Some answers aren't marked", `${missing} answer${missing === 1 ? " has" : "s have"} no points yet. Save anyway? This attempt will stay marked “Needs marking”.`, "Save anyway"))) return false;
+        await st.save("exam_results", { attempt_id: at.id, manual, total, needs_review: missing > 0, released: f.elements.release.checked }, "attempt_id");
+        toast("Marks saved"); render();
+      }
+    });
+  });
+}
+
+async function examTake(tok, id) {
+  const st = store();
+  const [e] = await st.list("exams", { eq: { id } });
+  const [att] = await st.list("exam_attempts", { eq: { exam_id: id } });
+  if (!e || !att) { location.hash = "#/exams/" + id; return; }
+  if (att.submitted_at) { location.hash = "#/exams/" + id; return; }
+  const qs = (await st.list("exam_questions", { eq: { exam_id: id } })).sort(byPos);
+  const draftKey = "dd-lms-answers-" + att.id;
+  let answers = {}; try { answers = JSON.parse(localStorage.getItem(draftKey)) || {}; } catch {}
+  const ends = [e.time_limit_min ? new Date(att.started_at).getTime() + e.time_limit_min * 60000 : null, e.closes_at ? new Date(e.closes_at).getTime() : null].filter(Boolean);
+  const deadline = ends.length ? Math.min(...ends) : null, total = deadline ? deadline - new Date(att.started_at).getTime() : null;
+  const ok = paint(tok, `<div class="crumb"><a href="#/exams">Exams</a> / ${esc(e.title)}</div>
+    ${deadline ? `<div class="timer" id="timer">${ic("clock", 20)}<span class="clock" id="clock">--:--</span><span class="small muted">left</span><div class="bar"><span id="bar"></span></div><button class="btn primary sm" id="submitTop">Submit</button></div>` : ""}
+    <form class="card" id="examForm">${qs.map((q, i) => `<div class="q"><div class="qn">Question ${i + 1} of ${qs.length} · ${fmtNum(q.points)} pt${q.points == 1 ? "" : "s"}</div><div class="prompt md">${md(q.prompt)}</div>
+      ${q.kind === "mc" ? (q.options || []).map((o, j) => `<label class="opt"><input type="radio" name="${q.id}" value="${j}" ${String(answers[q.id]) === String(j) ? "checked" : ""}> <span>${esc(o)}</span></label>`).join("")
+        : q.kind === "tf" ? ["true", "false"].map(v => `<label class="opt"><input type="radio" name="${q.id}" value="${v}" ${String(answers[q.id]) === v ? "checked" : ""}> <span>${v === "true" ? "True" : "False"}</span></label>`).join("")
+        : q.kind === "short" ? `<input type="text" name="${q.id}" maxlength="500" value="${esc(answers[q.id] || "")}" placeholder="Your answer">`
+        : `<textarea name="${q.id}" rows="6" placeholder="Your answer">${esc(answers[q.id] || "")}</textarea>`}</div>`).join("") || empty("exam", "This exam has no questions.")}
+      <div class="q row"><span class="small muted">Your answers are saved on this device as you go.</span><span class="spacer"></span><button class="btn primary" type="submit">${ic("send")} Submit exam</button></div></form>`);
+  if (!ok) return;
+  const form = $("#examForm");
+  const collect = () => { const a = {}; for (const q of qs) { const el = form.elements[q.id]; if (!el) continue; const v = q.kind === "mc" || q.kind === "tf" ? (form.querySelector(`[name="${q.id}"]:checked`)?.value) : el.value; if (v !== undefined && v !== "") a[q.id] = q.kind === "mc" ? Number(v) : q.kind === "tf" ? v === "true" : v; } return a; };
+  form.addEventListener("input", () => { answers = collect(); try { localStorage.setItem(draftKey, JSON.stringify(answers)); } catch {} });
+  let done = false;
+  const submit = async auto => {
+    if (done) return;
+    answers = collect();
+    if (!auto) {
+      const blank = qs.filter(q => answers[q.id] === undefined).length;
+      if (!(await modal({ title: "Submit your exam?", body: `<p>${blank ? `<b>${blank} question${blank === 1 ? " is" : "s are"} unanswered.</b> ` : "All questions are answered. "}You can't change your answers after submitting.</p>`, ok: "Submit" }))) return;
+    }
+    done = true; clearTimers();
+    try {
+      const r = await st.submitExam(id, answers);
+      try { localStorage.removeItem(draftKey); } catch {}
+      toast(auto ? "Time's up, so your exam was submitted." : r && !r.hidden ? `Submitted! You scored ${fmtNum(r.total)} / ${fmtNum(r.max)}${r.needs_review ? " so far" : ""}.` : "Submitted!");
+      location.hash = "#/exams/" + id;
+    } catch (err) { done = false; toast(errMsg(err), true); }
+  };
+  form.onsubmit = ev => { ev.preventDefault(); submit(false); };
+  $("#submitTop")?.addEventListener("click", () => submit(false));
+  window.onbeforeunload = () => "Your exam is still in progress.";
+  if (deadline) {
+    const tickFn = () => {
+      const left = deadline - Date.now();
+      if (left <= 0) { $("#clock").textContent = "0:00"; submit(true); return; }
+      const m = Math.floor(left / 60000), s = Math.floor(left / 1000) % 60;
+      $("#clock").textContent = (m >= 60 ? Math.floor(m / 60) + ":" + String(m % 60).padStart(2, "0") : m) + ":" + String(s).padStart(2, "0");
+      $("#bar").style.width = Math.max(0, Math.min(100, (left / total) * 100)) + "%";
+      $("#timer").classList.toggle("low", left < 60000 * Math.min(5, Math.max(1, (total / 60000) * 0.15)));
+    };
+    tickFn(); S.timers.push(setInterval(tickFn, 1000));
+  }
+}
+
+async function examEditor(tok, id) {
+  const st = store();
+  if (!isT()) { location.hash = "#/exams"; return; }
+  let e = { title: "", instructions: "", time_limit_min: 30, opens_at: null, closes_at: null, show_results: true, published: false };
+  let qs = [], attempts = 0;
+  if (id) {
+    const [ex] = await st.list("exams", { eq: { id } }); if (!ex) { location.hash = "#/exams"; return; }
+    e = ex;
+    const [qq, keys, at] = await Promise.all([st.list("exam_questions", { eq: { exam_id: id } }), st.list("exam_keys"), st.list("exam_attempts", { eq: { exam_id: id } })]);
+    const k = Object.fromEntries(keys.map(x => [x.question_id, x.answer]));
+    qs = qq.sort(byPos).map(q => ({ ...q, options: [...(q.options || [])], answer: k[q.id] ?? null }));
+    attempts = at.length;
+  }
+  const origIds = qs.map(q => q.id);
+  const ok = paint(tok, head(id ? "Edit exam" : "New exam", "", "", `<a href="#/exams">Exams</a> /${id ? ` <a href="#/exams/${id}">${esc(e.title)}</a> /` : ""}`) + `
+    ${attempts ? `<div class="card pad row" style="margin-bottom:16px;border-color:var(--amber)">${ic("info")}<span><b>${attempts} student${attempts === 1 ? " has" : "s have"} already started this exam.</b> Changing questions or answers won't re-mark their attempts.</span></div>` : ""}
+    <form id="exForm" class="stack">
+      <div class="card pad stack">
+        <label class="field">Title<input type="text" name="title" required maxlength="140" value="${esc(e.title)}" placeholder="Quiz 2 · Grouping"></label>
+        <label class="field">Instructions for students<textarea name="instructions" rows="4">${esc(e.instructions)}</textarea></label>
+        <div class="grid3"><label class="field">Time limit (minutes)<span class="hint">Leave empty for no limit</span><input type="number" name="limit" min="1" value="${e.time_limit_min ?? ""}"></label>
+          <label class="field">Opens<span class="hint">Empty = open once published</span><input type="datetime-local" name="opens" value="${toLocalInput(e.opens_at)}"></label>
+          <label class="field">Closes<span class="hint">Empty = never closes</span><input type="datetime-local" name="closes" value="${toLocalInput(e.closes_at)}"></label></div>
+        <div class="row"><label class="check"><input type="checkbox" name="show" ${e.show_results ? "checked" : ""}> Show students their score right after submitting</label><label class="check"><input type="checkbox" name="published" ${e.published ? "checked" : ""}> Published</label></div>
+      </div>
+      <div class="row"><h2 style="flex:1">Questions</h2><span class="small muted" id="qTotal"></span></div>
+      <div id="qList"></div>
+      <div class="row"><span class="small muted">Add:</span>${Object.entries(QKIND).map(([k, l]) => `<button type="button" class="btn sm" data-addq="${k}">${ic("plus")} ${l}</button>`).join("")}</div>
+      <div class="row" style="justify-content:flex-end;border-top:1px solid var(--border);padding-top:16px"><a class="btn" href="${id ? "#/exams/" + id : "#/exams"}">Cancel</a><button class="btn primary" type="submit">${ic("check")} Save exam</button></div>
+    </form>`);
+  if (!ok) return;
+  const list = $("#qList");
+  const draw = () => {
+    list.innerHTML = qs.map((q, i) => `<div class="qedit" data-i="${i}">
+      <div class="row" style="margin-bottom:8px"><b>Question ${i + 1}</b><span class="chip accent">${QKIND[q.kind]}</span><span class="spacer"></span>
+        <label class="row small" style="gap:6px">Points <input type="number" min="0" step="any" style="width:80px" data-f="points" value="${esc(q.points)}"></label>
+        <button type="button" class="btn sm ghost icon" data-q="up" ${i === 0 ? "disabled" : ""} aria-label="Move up">${ic("up")}</button><button type="button" class="btn sm ghost icon" data-q="down" ${i === qs.length - 1 ? "disabled" : ""} aria-label="Move down">${ic("down")}</button><button type="button" class="btn sm ghost icon" data-q="del" aria-label="Remove question">${ic("trash")}</button></div>
+      <textarea rows="2" data-f="prompt" placeholder="Question text">${esc(q.prompt)}</textarea>
+      ${q.kind === "mc" ? `<div class="opts" style="margin-top:10px"><div class="small muted" style="margin-bottom:6px">Options: select the correct one</div>${q.options.map((o, j) => `<div class="row"><input type="radio" name="key_${i}" data-key="${j}" ${String(q.answer) === String(j) ? "checked" : ""} aria-label="Correct answer"><input type="text" data-opt="${j}" value="${esc(o)}" placeholder="Option ${j + 1}"><button type="button" class="btn sm ghost icon" data-delopt="${j}" ${q.options.length <= 2 ? "disabled" : ""} aria-label="Remove option">${ic("x")}</button></div>`).join("")}<button type="button" class="btn sm" data-addopt>${ic("plus")} Option</button></div>`
+      : q.kind === "tf" ? `<div class="row" style="margin-top:10px"><span class="small muted">Correct answer:</span><label class="check"><input type="radio" name="key_${i}" data-tf="true" ${q.answer === true ? "checked" : ""}> True</label><label class="check"><input type="radio" name="key_${i}" data-tf="false" ${q.answer === false ? "checked" : ""}> False</label></div>`
+      : q.kind === "short" ? `<label class="field" style="margin-top:10px">Accepted answers <span class="hint">One per line; capitals and extra spaces are ignored. Leave empty to mark by hand.</span><textarea rows="2" data-f="accepted">${esc(Array.isArray(q.answer) ? q.answer.join("\n") : "")}</textarea></label>`
+      : `<p class="small muted" style="margin:8px 0 0">You'll mark essay answers by hand in Review.</p>`}</div>`).join("") || `<div class="card">${empty("exam", "No questions yet. Add one below.")}</div>`;
+    $("#qTotal").textContent = qs.length ? `${qs.length} question${qs.length === 1 ? "" : "s"} · ${fmtNum(qs.reduce((s, q) => s + (Number(q.points) || 0), 0))} points` : "";
+  };
+  draw();
+  list.addEventListener("input", ev => {
+    const box = ev.target.closest(".qedit"); if (!box) return; const q = qs[+box.dataset.i], el = ev.target;
+    if (el.dataset.f === "prompt") q.prompt = el.value;
+    else if (el.dataset.f === "points") { q.points = num(el.value) ?? 0; $("#qTotal").textContent = `${qs.length} questions · ${fmtNum(qs.reduce((s, x) => s + (Number(x.points) || 0), 0))} points`; }
+    else if (el.dataset.f === "accepted") q.answer = el.value.split("\n").map(s => s.trim()).filter(Boolean);
+    else if (el.dataset.opt !== undefined) q.options[+el.dataset.opt] = el.value;
+  });
+  list.addEventListener("change", ev => {
+    const box = ev.target.closest(".qedit"); if (!box) return; const q = qs[+box.dataset.i], el = ev.target;
+    if (el.dataset.key !== undefined) q.answer = Number(el.dataset.key);
+    if (el.dataset.tf !== undefined) q.answer = el.dataset.tf === "true";
+  });
+  list.addEventListener("click", ev => {
+    const b = ev.target.closest("button"); if (!b) return; const box = b.closest(".qedit"); const i = +box.dataset.i, q = qs[i];
+    if (b.dataset.q === "del") qs.splice(i, 1);
+    else if (b.dataset.q === "up") [qs[i - 1], qs[i]] = [qs[i], qs[i - 1]];
+    else if (b.dataset.q === "down") [qs[i + 1], qs[i]] = [qs[i], qs[i + 1]];
+    else if (b.dataset.addopt !== undefined) q.options.push("");
+    else if (b.dataset.delopt !== undefined) { const j = +b.dataset.delopt; q.options.splice(j, 1); if (q.answer === j) q.answer = null; else if (q.answer > j) q.answer--; }
+    else return;
+    draw();
+  });
+  $$("[data-addq]").forEach(b => b.onclick = () => {
+    const k = b.dataset.addq;
+    qs.push({ id: uid(), _new: true, kind: k, prompt: "", points: k === "essay" ? 5 : 1, options: k === "mc" ? ["", "", "", ""] : [], answer: k === "short" ? [] : null });
+    draw(); list.lastElementChild?.querySelector("textarea")?.focus();
+  });
+  $("#exForm").onsubmit = async ev => {
+    ev.preventDefault();
+    const f = ev.target;
+    const title = fval(f, "title"); if (!title) { toast("Give the exam a title.", true); f.elements.title.focus(); return; }
+    for (const [i, q] of qs.entries()) {
+      const n = `Question ${i + 1}: `;
+      if (!q.prompt.trim()) { toast(n + "write the question.", true); return; }
+      if (q.kind === "mc") { q.options = q.options.map(o => o.trim()); if (q.options.filter(Boolean).length < 2 || q.options.some(o => !o)) { toast(n + "fill in every option (at least two), or remove empty ones.", true); return; } if (q.answer === null || q.answer === undefined || q.answer >= q.options.length) { toast(n + "select the correct option.", true); return; } }
+      if (q.kind === "tf" && typeof q.answer !== "boolean") { toast(n + "choose True or False as the correct answer.", true); return; }
+    }
+    const opens = fromLocalInput(f.elements.opens.value), closes = fromLocalInput(f.elements.closes.value);
+    if (opens && closes && closes <= opens) { toast("The closing time must be after the opening time.", true); return; }
+    if (f.elements.published.checked && !qs.length) { toast("Add at least one question before publishing.", true); return; }
+    const btn = $("button[type=submit]", f); btn.disabled = true;
+    try {
+      const saved = await st.save("exams", { id: id || undefined, title, instructions: f.elements.instructions.value, time_limit_min: num(f.elements.limit.value), opens_at: opens, closes_at: closes, show_results: f.elements.show.checked, published: f.elements.published.checked });
+      const examId = saved.id;
+      for (const old of origIds.filter(x => !qs.some(q => q.id === x))) await st.remove("exam_questions", old);
+      for (const [i, q] of qs.entries()) await st.save("exam_questions", { id: q.id, exam_id: examId, position: i + 1, kind: q.kind, prompt: q.prompt, options: q.kind === "mc" ? q.options : [], points: Number(q.points) || 0 }, "id", { insert: !!q._new });
+      await st.removeWhere("exam_keys", "question_id", qs.map(q => q.id));
+      await st.insertMany("exam_keys", qs.filter(q => (q.kind === "mc" || q.kind === "tf") ? q.answer !== null && q.answer !== undefined : q.kind === "short" && Array.isArray(q.answer) && q.answer.length).map(q => ({ question_id: q.id, answer: q.answer })));
+      toast("Exam saved"); location.hash = "#/exams/" + examId;
+    } catch (err) { toast(errMsg(err), true); btn.disabled = false; }
+  };
+}
+
+/* ============================== messages ============================== */
+ROUTES.messages = async (tok, sid) => {
+  const t = isT(), st = store();
+  const people = await st.list("profiles");
+  const studentId = t ? sid : S.me.id;
+  const all = await st.list("messages");
+  const students = people.filter(p => p.role === "student");
+  let listHtml = "";
+  if (t) {
+    const threads = students.map(p => { const ms = all.filter(m => m.student_id === p.id).sort((a, b) => a.created_at.localeCompare(b.created_at)); return { p, last: ms[ms.length - 1], unread: ms.filter(m => !m.read_at && m.sender_id !== S.me.id).length }; })
+      .sort((a, b) => (b.unread - a.unread) || String(b.last?.created_at || "").localeCompare(String(a.last?.created_at || "")) || displayName(a.p).localeCompare(displayName(b.p)));
+    listHtml = `<div class="threads list">${threads.map(x => `<a class="item" href="#/messages/${x.p.id}" style="${x.p.id === sid ? "background:var(--accent-soft)" : ""}">${avatar(x.p)}<div style="flex:1;min-width:0"><div class="ttl">${esc(displayName(x.p))}</div><div class="meta" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${x.last ? esc(x.last.body.slice(0, 60)) : "No messages yet"}</div></div>${x.unread ? `<span class="dot" title="Unread"></span>` : ""}</a>`).join("") || empty("people", "No students yet.")}</div>`;
+  }
+  const other = t ? people.find(p => p.id === sid) : null;
+  const threadHtml = studentId ? `<div class="thread"><div class="card-head">${t ? avatar(other) : `<span class="tile t-teal" style="width:30px;height:30px">${ic("chat", 15)}</span>`}<div><b>${t ? esc(displayName(other)) : "Your instructor"}</b><div class="tiny muted">${t ? esc(other?.email || "") : "Private: only you and your instructor can see these messages."}</div></div></div>
+      <div class="msgs" id="msgs"></div>
+      <form class="composer" id="composer"><textarea name="body" placeholder="Write a message… (Enter to send, Shift+Enter for a new line)" maxlength="5000" aria-label="Message"></textarea><button class="btn primary" type="submit" aria-label="Send">${ic("send")}</button></form></div>`
+    : `<div class="thread">${empty("chat", "Choose a student to read or start a conversation.")}</div>`;
+  const ok = paint(tok, head("Messages", t ? "Private conversations with each student. For news to everyone, post an announcement." : "Ask your instructor anything.") +
+    `<div class="card ${t ? "inbox" : ""}" style="overflow:hidden">${listHtml}${threadHtml}</div>`);
+  if (!ok || !studentId) return;
+  const box = $("#msgs");
+  const draw = list => {
+    const ms = list.filter(m => m.student_id === studentId).sort((a, b) => a.created_at.localeCompare(b.created_at));
+    const atBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 40;
+    box.innerHTML = ms.map(m => { const mine = m.sender_id === S.me.id, who = people.find(p => p.id === m.sender_id); return `<div class="bubble ${mine ? "me" : "them"}">${esc(m.body)}<span class="when">${mine ? "You" : esc(displayName(who))} · ${fmtDate(m.created_at)}</span></div>`; }).join("") || `<div class="empty">${t ? "No messages yet. Say hello!" : "No messages yet. Questions about an assignment or the course? Write below."}</div>`;
+    if (atBottom || !box.dataset.drawn) box.scrollTop = box.scrollHeight;
+    box.dataset.drawn = 1;
+    if (ms.some(m => !m.read_at && m.sender_id !== S.me.id)) st.markRead(studentId).then(refreshBadges).catch(() => {});
+  };
+  draw(all);
+  const form = $("#composer"), ta = form.elements.body;
+  ta.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); form.requestSubmit(); } });
+  form.onsubmit = async e => {
+    e.preventDefault();
+    const body = ta.value.trim(); if (!body) return;
+    ta.disabled = true;
+    try { await st.save("messages", { student_id: studentId, body }); ta.value = ""; draw(await st.list("messages")); }
+    catch (err) { toast(errMsg(err), true); }
+    finally { ta.disabled = false; ta.focus(); }
+  };
+  if (!t || sid) ta.focus();
+  S.timers.push(setInterval(async () => { if (tok !== S.tok) return; try { draw(await st.list("messages")); } catch {} }, 15000));
+};
+
+/* =============================== grades =============================== */
+ROUTES.grades = async tok => {
+  const t = isT(), st = store();
+  const [asg, subs, exams, res, people] = await Promise.all([st.list("assignments"), st.list("submissions"), st.list("exams"), st.list("exam_results"), st.list("profiles")]);
+  const items = [
+    ...asg.filter(a => a.published).map(a => ({ kind: "Assignment", id: a.id, title: a.title, max: Number(a.points) || 0, due: a.due_at, href: "#/assignments/" + a.id, score: sid => { const s = subs.find(x => x.assignment_id === a.id && x.student_id === sid); return s && s.grade !== null && s.grade !== undefined ? Number(s.grade) : null; }, status: sid => subs.find(x => x.assignment_id === a.id && x.student_id === sid) })),
+    ...exams.filter(e => e.published).map(e => ({ kind: "Exam", id: e.id, title: e.title, max: null, due: e.closes_at, href: "#/exams/" + e.id, score: sid => { const r = res.find(x => x.exam_id === e.id && x.student_id === sid); return r && (t || r.released || !r.needs_review) ? Number(r.total) : null; }, maxFor: sid => { const r = res.find(x => x.exam_id === e.id && x.student_id === sid); return r ? Number(r.max_score) : null; } }))
+  ].sort((a, b) => String(a.due || "9").localeCompare(String(b.due || "9")));
+  const outOf = (it, sid) => (it.kind === "Exam" ? it.maxFor(sid) : it.max);
+  const pct = sid => { let got = 0, max = 0; for (const it of items) { const s = it.score(sid), m = outOf(it, sid); if (s !== null && m) { got += s; max += m; } } return max ? Math.round((got / max) * 1000) / 10 : null; };
+
+  if (!t) {
+    const p = pct(S.me.id);
+    return paint(tok, head("Grades", "Everything graded so far.") + `
+      <div class="card pad row" style="margin-bottom:18px"><span class="tile t-teal">${ic("chart")}</span><div><div class="muted small">Overall (graded work only)</div><b style="font-size:26px">${p === null ? "–" : p + "%"}</b></div></div>
+      <div class="card"><div class="table-wrap"><table class="t"><thead><tr><th>Item</th><th>Type</th><th class="num">Score</th><th>Feedback</th></tr></thead><tbody>
+      ${items.map(it => { const s = it.score(S.me.id), m = outOf(it, S.me.id), sub = it.kind === "Assignment" ? it.status(S.me.id) : null;
+        return `<tr><td><a href="${it.href}"><b>${esc(it.title)}</b></a>${it.due ? `<div class="tiny muted">${fmtDay(it.due)}</div>` : ""}</td><td><span class="chip">${it.kind}</span></td>
+          <td class="num">${s !== null ? `<b>${fmtNum(s)}</b> / ${fmtNum(m)}` : sub ? `<span class="chip info">Submitted</span>` : "–"}</td><td class="small">${esc((sub?.feedback || "").slice(0, 160))}</td></tr>`; }).join("") || `<tr><td colspan="4">${empty("chart", "Nothing graded yet.")}</td></tr>`}
+      </tbody></table></div></div>`);
+  }
+  const students = people.filter(p => p.role === "student").sort((x, y) => displayName(x).localeCompare(displayName(y)));
+  const ok = paint(tok, head("Gradebook", "Every student's score on every published assignment and exam.", `<button class="btn" id="csv">${ic("download")} Export CSV</button>`) + `
+    <div class="card"><div class="table-wrap"><table class="t"><thead><tr><th>Student</th>${items.map(it => `<th class="num" title="${esc(it.title)}"><a href="${it.href}" style="color:inherit">${esc(it.title.length > 22 ? it.title.slice(0, 21) + "…" : it.title)}</a><div class="tiny" style="font-weight:400">${it.kind}${it.max ? " · " + fmtNum(it.max) : ""}</div></th>`).join("")}<th class="num">Overall</th></tr></thead><tbody>
+    ${students.map(p => `<tr><td><div class="row" style="flex-wrap:nowrap">${avatar(p)}<b>${esc(displayName(p))}</b></div></td>${items.map(it => { const s = it.score(p.id); const subd = it.kind === "Assignment" ? it.status(p.id) : res.find(x => x.exam_id === it.id && x.student_id === p.id); return `<td class="num">${s !== null ? fmtNum(s) : subd ? `<span class="chip warn">to grade</span>` : `<span class="muted">–</span>`}</td>`; }).join("")}<td class="num"><b>${pct(p.id) === null ? "–" : pct(p.id) + "%"}</b></td></tr>`).join("") || `<tr><td colspan="${items.length + 2}">${empty("people", "No students yet.")}</td></tr>`}
+    </tbody></table></div></div>`);
+  if (ok) $("#csv").onclick = () => saveBlob(new Blob([csv([["Student", "Email", ...items.map(it => `${it.title} (${it.kind})`), "Overall %"], ...students.map(p => [displayName(p), p.email, ...items.map(it => it.score(p.id) ?? ""), pct(p.id) ?? ""])])], { type: "text/csv" }), safeFile(S.course.code || S.course.title) + "-gradebook.csv");
+};
+
+/* =============================== people =============================== */
+ROUTES.people = async tok => {
+  if (!isT()) { location.hash = "#/home"; return; }
+  const st = store();
+  const [people, subs] = await Promise.all([st.list("profiles"), st.list("submissions")]);
+  const students = people.filter(p => p.role === "student").sort((x, y) => displayName(x).localeCompare(displayName(y)));
+  const teachers = people.filter(p => p.role === "instructor");
+  const site = location.origin + location.pathname;
+  const ok = paint(tok, head("People", `${students.length} student${students.length === 1 ? "" : "s"} and ${teachers.length} instructor${teachers.length === 1 ? "" : "s"}.`) + `
+    <div class="card pad" style="margin-bottom:18px"><div class="row"><span class="tile t-teal">${ic("mail")}</span><div style="flex:1;min-width:220px"><b>Invite students</b><div class="small muted">${DEMO ? "In demo mode you can add pretend students below." : "Share this link. Students sign in with their email address and appear here after their first sign-in."}</div></div>
+      ${DEMO ? `<form class="row" id="addForm"><input type="text" name="name" placeholder="Student's full name" style="width:220px" required><button class="btn primary">${ic("plus")} Add demo student</button></form>` : `<code class="answer-box" style="padding:6px 10px">${esc(site)}</code><button class="btn" id="copy">${ic("link")} Copy link</button>`}</div></div>
+    <div class="card"><div class="table-wrap"><table class="t"><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Joined</th><th class="num">Submissions</th><th></th></tr></thead><tbody>
+    ${[...teachers, ...students].map(p => `<tr><td><div class="row" style="flex-wrap:nowrap">${avatar(p)}<b>${esc(displayName(p))}</b></div></td><td class="small">${esc(p.email)}</td><td>${p.role === "instructor" ? `<span class="chip accent">Instructor</span>` : `<span class="chip">Student</span>`}</td><td class="small">${fmtDay(p.created_at)}</td><td class="num">${p.role === "student" ? subs.filter(s => s.student_id === p.id).length : ""}</td><td>${p.role === "student" ? `<a class="btn sm" href="#/messages/${p.id}">${ic("chat")} Message</a>` : ""}</td></tr>`).join("")}
+    </tbody></table></div></div>`);
+  if (!ok) return;
+  $("#copy")?.addEventListener("click", () => navigator.clipboard.writeText(site).then(() => toast("Link copied"), () => toast("Couldn't copy. Select the link and copy it.", true)));
+  $("#addForm")?.addEventListener("submit", async e => { e.preventDefault(); const n = e.target.elements.name.value.trim(); if (!n) return; await st.addDemoStudent(n); toast(n + " added"); render(); });
+};
+
+/* ============================== settings ============================== */
+ROUTES.settings = async tok => {
+  if (!isT()) { location.hash = "#/home"; return; }
+  const c = await store().getCourse();
+  const ok = paint(tok, head("Course settings", "The name and description students see.") + `
+    <form class="card pad stack" id="courseForm">
+      <label class="field">Course title<input type="text" name="title" required maxlength="120" value="${esc(c.title)}"></label>
+      <div class="grid2"><label class="field">Course code<input type="text" name="code" maxlength="40" value="${esc(c.code)}" placeholder="SQL 101"></label><label class="field">Term<input type="text" name="term" maxlength="40" value="${esc(c.term)}" placeholder="Fall 2026"></label></div>
+      <label class="field">Description <span class="hint">Shown on everyone's home page.</span><textarea name="description" rows="5">${esc(c.description)}</textarea></label>
+      <div class="row" style="justify-content:flex-end"><button class="btn primary">${ic("check")} Save</button></div>
+    </form>
+    ${DEMO ? `<div class="card pad" style="margin-top:18px"><h2>Going live</h2><p class="muted" style="margin-top:6px">This site is in <b>demo mode</b>: data lives only in this browser and anyone can switch roles. To use it with real students:</p>
+      <ol class="md" style="padding-left:20px"><li>Create a free project at <a href="https://supabase.com" target="_blank" rel="noopener">supabase.com</a>.</li><li>In its <b>SQL Editor</b>, run <code>supabase/setup.sql</code> after putting your email in the first lines.</li><li>Paste the project's URL and anon key into <code>config.js</code>, and upload it to GitHub.</li><li>In Supabase, go to <b>Authentication → URL Configuration</b> and set <b>Site URL</b> to your GitHub Pages address.</li></ol>
+      <p class="muted">The full walkthrough is in <b>README.md</b>.</p><button class="btn danger" id="reset">${ic("refresh")} Reset demo data</button></div>` : ""}`);
+  if (!ok) return;
+  $("#courseForm").onsubmit = async e => {
+    e.preventDefault(); const f = e.target;
+    if (!fval(f, "title")) { toast("Add a course title.", true); return; }
+    try { S.course = await store().save("course", { title: fval(f, "title"), code: fval(f, "code"), term: fval(f, "term"), description: f.elements.description.value }); toast("Course updated"); renderShell(); render(); }
+    catch (err) { toast(errMsg(err), true); }
+  };
+  $("#reset")?.addEventListener("click", async () => { if (await confirmBox("Reset the demo?", "This puts back the sample course and removes everything you added in demo mode.", "Reset")) { store().reset(); location.reload(); } });
+};
+
+/* =============================== sign-in =============================== */
+function authError(e) {
+  const m = errMsg(e);
+  if (/invalid login credentials/i.test(m)) return "That email and password don't match. Check them, or use “Forgot password?”.";
+  if (/email not confirmed/i.test(m)) return "Please confirm your email first. Open the link we sent you, then sign in.";
+  if (/already registered|already been registered/i.test(m)) return "There's already an account with this email. Sign in instead.";
+  if (/rate limit|too many/i.test(m)) return "Too many emails were sent recently. Please wait a few minutes and try again, or sign in with your password.";
+  if (/password should be|weak password/i.test(m)) return "Choose a longer password (at least 8 characters).";
+  return m;
+}
+function renderLogin(course, err) {
+  $("#app").innerHTML = `<div class="auth"><div class="card">
+    <img class="auth-logo" alt="Dawit Demissie — SELECT * FROM sql_lessons;">
+    <h1 style="text-align:center;font-size:22px">${esc(course?.title || "Learning Platform")}</h1>
+    <p class="muted" style="text-align:center;margin:6px 0 18px">${esc([course?.code, course?.term].filter(Boolean).join(" · ")) || "Sign in to continue"}</p>
+    <div class="seg" role="tablist" style="display:flex;background:var(--hover);border-radius:10px;padding:3px;margin-bottom:18px">
+      ${[["in", "Sign in"], ["up", "Create account"], ["link", "Email link"]].map(([k, l]) => `<button type="button" role="tab" class="btn ghost sm" data-mode="${k}" style="flex:1">${l}</button>`).join("")}
+    </div>
+    <form id="authForm" class="stack" novalidate>
+      <label class="field m-up">Full name<input type="text" name="name" autocomplete="name" maxlength="80"></label>
+      <label class="field">Email address<input type="email" name="email" required autocomplete="email" placeholder="you@example.com"></label>
+      <label class="field m-in m-up">Password <span class="hint m-up">At least 8 characters.</span><input type="password" name="password" autocomplete="current-password"></label>
+      <button class="btn primary" type="submit" style="min-height:42px" id="authBtn"></button>
+      <p class="small muted m-link" style="margin:0;text-align:center">No password needed: we'll email you a link that signs you in.</p>
+      <p class="m-in" style="margin:0;text-align:center"><button type="button" class="btn ghost sm" id="forgot">Forgot password?</button></p>
+    </form>
+    <div id="sent" class="hidden" style="text-align:center"><span class="tile t-teal" style="margin:0 auto 12px">${ic("mail")}</span><h2>Check your email</h2><p class="muted" style="margin-top:6px" id="sentMsg"></p><button class="btn" id="again">Back</button></div>
+    ${err ? `<div class="card pad" style="margin-top:16px;border-color:var(--err);background:var(--err-soft)">${esc(err)}</div>` : ""}
+    <div class="row" style="justify-content:center;margin-top:20px"><button class="btn ghost sm" id="themeBtn"></button></div>
+  </div></div>`;
+  updateThemeUi();
+  $("#themeBtn").onclick = () => setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+  const form = $("#authForm"), btn = $("#authBtn");
+  let mode = "in";
+  const setMode = m => {
+    mode = m;
+    $$("[data-mode]").forEach(b => { const on = b.dataset.mode === m; b.style.background = on ? "var(--raise)" : ""; b.style.boxShadow = on ? "var(--shadow)" : ""; b.setAttribute("aria-selected", on); });
+    $$(".m-in,.m-up,.m-link", form).forEach(el => el.classList.toggle("hidden", !el.classList.contains("m-" + m)));
+    form.elements.password.autocomplete = m === "up" ? "new-password" : "current-password";
+    btn.innerHTML = m === "in" ? `${ic("logout")} Sign in` : m === "up" ? `${ic("user")} Create my account` : `${ic("mail")} Email me a sign-in link`;
+  };
+  $$("[data-mode]").forEach(b => b.onclick = () => setMode(b.dataset.mode));
+  setMode("in");
+  const sent = msg => { $("#sentMsg").innerHTML = msg; form.classList.add("hidden"); $("#sent").classList.remove("hidden"); };
+  form.onsubmit = async e => {
+    e.preventDefault();
+    const email = form.elements.email.value.trim(), pw = form.elements.password.value, name = form.elements.name.value.trim();
+    if (!/^\S+@\S+\.\S+$/.test(email)) { toast("Enter a valid email address.", true); return; }
+    if (mode === "up" && !name) { toast("Enter your full name.", true); return; }
+    if (mode !== "link" && pw.length < (mode === "up" ? 8 : 1)) { toast(mode === "up" ? "Choose a password of at least 8 characters." : "Enter your password.", true); return; }
+    btn.disabled = true;
+    try {
+      if (mode === "in") { await store().signInPassword(email, pw); location.reload(); return; }
+      if (mode === "up") {
+        const signedIn = await store().signUp(name, email, pw);
+        if (signedIn) { location.reload(); return; }
+        sent(`We sent a confirmation link to <b>${esc(email)}</b>. Open it to finish creating your account.`);
+      } else { await store().signIn(email); sent(`We sent a sign-in link to <b>${esc(email)}</b>. Open it on this device. It can take a minute; check your spam folder too.`); }
+    } catch (err2) { toast(authError(err2), true); }
+    finally { btn.disabled = false; }
+  };
+  $("#forgot").onclick = async () => {
+    const email = form.elements.email.value.trim();
+    if (!/^\S+@\S+\.\S+$/.test(email)) { toast("Type your email address first, then click “Forgot password?”.", true); form.elements.email.focus(); return; }
+    try { await store().resetPassword(email); sent(`If <b>${esc(email)}</b> has an account, we've sent it a link to choose a new password.`); }
+    catch (err2) { toast(authError(err2), true); }
+  };
+  $("#again").onclick = () => { $("#sent").classList.add("hidden"); form.classList.remove("hidden"); };
+}
+
+/* ================================ boot ================================ */
+async function boot() {
+  window.addEventListener("hashchange", render);
+  let recovery = false;
+  try {
+    if (DEMO) {
+      S.store = new LocalStore();
+      S.me = await S.store.session();
+    } else {
+      const hashParams = new URLSearchParams(location.hash.replace(/^#/, ""));
+      const linkError = hashParams.get("error_description");
+      recovery = hashParams.get("type") === "recovery";
+      S.store = new SupaStore();
+      await S.store.init();
+      S.me = await S.store.session();
+      if (/access_token|error_description/.test(location.hash)) history.replaceState(null, "", location.pathname + location.search + "#/home");
+      S.store.sb.auth.onAuthStateChange(ev => { if (ev === "SIGNED_OUT") location.reload(); });
+      if (!S.me) {
+        let course = null; try { course = await S.store.getCourse(); } catch {}
+        return renderLogin(course, linkError ? linkError.replace(/\+/g, " ") + ". Please request a new link." : "");
+      }
+    }
+    S.course = await S.store.getCourse();
+    renderShell();
+    await render();
+    if (!DEMO && recovery) askPassword(true);
+    else if (!DEMO && !S.me.full_name) askName(true);
+  } catch (e) {
+    console.error(e);
+    $("#app").innerHTML = `<div class="auth"><div class="card"><img class="auth-logo" alt="Dawit Demissie"><h2>We couldn't start the site</h2><p class="muted" style="margin-top:8px">${esc(errMsg(e))}</p>${DEMO ? "" : `<p class="small muted">If you're the instructor: check the values in <code>config.js</code>, and that <code>supabase/setup.sql</code> has been run.</p>`}<button class="btn" onclick="location.reload()">${ic("refresh")} Try again</button></div></div>`;
+    updateThemeUi();
+  }
+}
+boot();
+
+</script>
+</body>
+</html>
